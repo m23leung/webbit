@@ -1,5 +1,5 @@
 current directory: /Users/crimsondarkn/webbit/vendor/bundle/ruby/2.6.0/gems/sqlite3-1.4.2/ext/sqlite3
-/Users/crimsondarkn/.rvm/rubies/ruby-2.6.3/bin/ruby -I /Users/crimsondarkn/.rvm/rubies/ruby-2.6.3/lib/ruby/site_ruby/2.6.0 -r ./siteconf20210810-34397-1i6ghes.rb extconf.rb
+/Users/crimsondarkn/.rbenv/versions/2.6.3/bin/ruby -I /Users/crimsondarkn/.rbenv/versions/2.6.3/lib/ruby/2.6.0 -r ./siteconf20210810-53332-16qi4fr.rb extconf.rb
 checking for sqlite3.h... yes
 checking for pthread_create() in -lpthread... yes
 checking for -ldl... yes
@@ -68,4 +68,4 @@ ld: warning: directory not found for option '-L/usr/local/Cellar/sqlite/3.34.0/l
 
 current directory: /Users/crimsondarkn/webbit/vendor/bundle/ruby/2.6.0/gems/sqlite3-1.4.2/ext/sqlite3
 make "DESTDIR=" install
-/usr/local/opt/coreutils/bin/ginstall -c -m 0755 sqlite3_native.bundle ./.gem.20210810-34397-15tffgt/sqlite3
+/usr/local/bin/ginstall -c -m 0755 sqlite3_native.bundle ./.gem.20210810-53332-hei3v7/sqlite3
