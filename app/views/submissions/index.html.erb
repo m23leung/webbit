@@ -6,6 +6,7 @@
       <th>Title</th>
       <th>Body</th>
       <th>Url</th>
+      <th>Image</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
         <td><%= submission.title %></td>
         <td><%= submission.body %></td>
         <td><%= submission.url %></td>
+        <td><%= submission.submission_image %></td>
         <td><%= link_to 'Show', submission %></td>
         <td><%= link_to 'Edit', edit_submission_path(submission) %></td>
         <td><%= link_to 'Destroy', submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>

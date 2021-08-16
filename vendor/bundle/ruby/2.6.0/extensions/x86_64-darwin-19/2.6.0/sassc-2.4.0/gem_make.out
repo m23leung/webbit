@@ -1,5 +1,5 @@
 current directory: /Users/crimsondarkn/webbit/vendor/bundle/ruby/2.6.0/gems/sassc-2.4.0/ext
-/Users/crimsondarkn/.rbenv/versions/2.6.3/bin/ruby -I /Users/crimsondarkn/.rbenv/versions/2.6.3/lib/ruby/2.6.0 -r ./siteconf20210810-53332-b0ml0y.rb extconf.rb
+/Users/crimsondarkn/.rvm/rubies/ruby-2.6.3/bin/ruby -I /Users/crimsondarkn/.rvm/rubies/ruby-2.6.3/lib/ruby/site_ruby/2.6.0 -r ./siteconf20210816-56784-njt6y7.rb extconf.rb
 creating Makefile
 
 current directory: /Users/crimsondarkn/webbit/vendor/bundle/ruby/2.6.0/gems/sassc-2.4.0/ext
@@ -77,4 +77,4 @@ linking shared-object sassc/libsass.bundle
 
 current directory: /Users/crimsondarkn/webbit/vendor/bundle/ruby/2.6.0/gems/sassc-2.4.0/ext
 make "DESTDIR=" install
-/usr/local/bin/ginstall -c -m 0755 libsass.bundle ./.gem.20210810-53332-xte6pb/sassc
+/usr/local/opt/coreutils/bin/ginstall -c -m 0755 libsass.bundle ./.gem.20210816-56784-9ty72s/sassc
