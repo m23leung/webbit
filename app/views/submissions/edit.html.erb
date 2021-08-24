@@ -1,6 +1,21 @@
-<h1>Editing Submission</h1>
+<% content_for :primary_content do %>
 
-<%= render 'form', submission: @submission %>
+ <div class="lg:p-10 pt-10 pb-10 px-4">
+    <h1 class="text-xl font-normal mb-6">Editing submission 
+        <span class="italic">
+          <%= @submission.title %>
+        </span>
+    </h1>
 
-<%= link_to 'Show', @submission %> |
-<%= link_to 'Back', submissions_path %>
+  <%= render 'form', submission: @submission %>
+
+  <%= link_to 'Show', @submission %> |
+  <%= link_to 'Back', submissions_path %>
+</div>
+<% end %>
+
+<% content_for :secondary_content do %>
+  <%= link_to 'New Submission', new_submission_path %>
+<% end %>
+
+<%= render "basic_layout" %>
