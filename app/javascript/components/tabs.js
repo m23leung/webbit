@@ -5,6 +5,7 @@ document.addEventListener("turbolinks:load", () => {
   const imageVideo = document.querySelector(".image_video");
   const url = document.querySelector(".url");
 
+  // By Default, we are on "Text" Type
   if (imageVideo != null || url != null) {
     imageVideo.classList.add("hidden");
     url.classList.add("hidden");
@@ -56,6 +57,7 @@ document.addEventListener("turbolinks:load", () => {
       text.querySelector("textarea").value = "";
     }
   }
+
   if (element != null) {
     element.addEventListener("click", (event) => {
       onTabClick(event);

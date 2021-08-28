@@ -7,8 +7,9 @@ import Rails from "@rails/ujs";
 import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
-import "components/tabs.js/index.js";
+import "components/tabs.js";
 import "stylesheets/application";
+import "components/dropdown";
 
 Rails.start();
 Turbolinks.start();
