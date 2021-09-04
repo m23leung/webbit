@@ -32,7 +32,7 @@
       <% end %>
     <% end %>
     
-    <nav class="bg-white py-2 border-b border-gray-400" role="navigation" aria-label="main navigation">
+    <nav class="js-nav bg-white py-2 border-b border-gray-400" role="navigation" aria-label="main navigation">
       <div class="flex flex-wrap items-center justify-center lg:justify-start lg-content-center px-4 lg:px-6">
         <%= link_to root_path, class: "leading-normal no-underline text-gray-800 my-2 md:my-0" do %>
           <h1 class="text-lg pr-2 font-bold">WEBBIT</h1>
@@ -69,9 +69,7 @@
 
     <div class="w-full flex flex-wrap flex-1 items-center justify-end pt-4 lg:pt-0">
       <div class="mr-3">        
-        <% if user_signed_in? %>
-        <%#
-          <%= link_to "Sign out", destroy_user_session_path, method: :delete, :data => {:confirm => "You are going to be disconnected", :title => 'Logoff'}, class: "btn btn-outline btn-small mr-2" %>       
+        <% if user_signed_in? %>     
           <%= link_to new_submission_path do %>
             <%= render_svg "icons/create" %>
           <% end %>
@@ -83,14 +81,14 @@
       </div>
 
       <% if user_signed_in? %>
-        <div class="dropdown rounded bg-white border border-gray-400 text-gray-600 ml-1 hover:bg-gray-200">
+        <div class="dropdown dropdown-user-account rounded bg-white border border-gray-400 text-gray-600 ml-1 hover:bg-gray-200">
           <div class="dropdown-content pt-2 pb-2 pl-3 pr-1">
             <%= link_to "#", class: "js-dropdown-user-target no-underline flex justify-between text-gray-700 uppercase text-xs tracking-wide items-center font-semibold" do %>
               <%= current_user.username if current_user.username %>
               <%= render_svg "icons/chevron-down" %>
             <% end %>
 
-            <ul class="list-none hidden dropdown-list absolute left-o rounded-b border border-gray-500 shadow">
+            <ul class="dropdown-menu dropdown-menu-right list-none hidden absolute left-o rounded-b border border-gray-400 shadow">
             <h5 class="mt-2 uppercase text-xs text-gray-500 font-normal py-2 pl-3 tracking-wide">My Stuff</h5>
               <li>
                 <%= link_to "#", class: "hover:bg-purple-500 hover:text-white text-gray-700 no-underline block py-2 px-4 flex items-center text-sm" do %>
@@ -103,7 +101,7 @@
                 <% end %>
               </li>
               <li>
-                <%= link_to destroy_user_session_path, class: "hover:bg-purple-500 hover:text-white text-gray-700 no-underline block py-2 px-4 flex items-center text-sm" do %>
+                <%= link_to destroy_user_session_path, class: "hover:bg-purple-500 hover:text-white text-gray-700 no-underline block py-2 px-4 flex items-center text-sm", method: :delete do %>
                 <%= render_svg "icons/signout", styles: "icon-md fill-current text-gray-600 mr-3" %>        Sign Out     
                 <% end %>
               </li>              
@@ -116,7 +114,7 @@
     </div>
   </nav>
 
-  <%= yield %>
+  <%= content_for?(:content) ? yield(:content) : yield %>
 
   </body>
 </html>
