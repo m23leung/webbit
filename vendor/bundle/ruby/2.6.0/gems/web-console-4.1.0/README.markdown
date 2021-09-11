@@ -175,19 +175,19 @@ Make sure your configuration lives in `config/environments/development.rb`.
 
 ## Credits
 
-* Shoutout to [Charlie Somerville] for [better_errors].
-* Kudos to [John Mair] for [binding_of_caller] and [debug_inspector].
-* Thanks to [Charles Oliver Nutter] for all the _JRuby_ feedback.
-* Hugs and kisses to all of our [contributors]!
+- Shoutout to [Charlie Somerville] for [better_errors].
+- Kudos to [John Mair] for [binding_of_caller] and [debug_inspector].
+- Thanks to [Charles Oliver Nutter] for all the _JRuby_ feedback.
+- Hugs and kisses to all of our [contributors]!
 
 [better_errors]: https://github.com/charliesome/better_errors
 [debug_inspector]: https://github.com/banister/debug_inspector
 [binding_of_caller]: https://github.com/banister/binding_of_caller
-[Charlie Somerville]: https://github.com/charliesome
-[John Mair]: https://github.com/banister
-[Charles Oliver Nutter]: https://github.com/headius
+[charlie somerville]: https://github.com/charliesome
+[john mair]: https://github.com/banister
+[charles oliver nutter]: https://github.com/headius
 [templates]: https://github.com/rails/web-console/tree/master/lib/web_console/templates
 [rvt]: https://github.com/gsamokovarov/rvt
 [contributors]: https://github.com/rails/web-console/graphs/contributors
-[Passenger on Nginx]: https://www.phusionpassenger.com/library/config/nginx/reference/#passengerstickysessions
-[Passenger on Apache]: https://www.phusionpassenger.com/library/config/apache/reference/#passengerstickysessions
+[passenger on nginx]: https://www.phusionpassenger.com/library/config/nginx/reference/#passengerstickysessions
+[passenger on apache]: https://www.phusionpassenger.com/library/config/apache/reference/#passengerstickysessions

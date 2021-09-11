@@ -1,84 +1,84 @@
 ---
 - "How do I do a database query?":
-  - "I just want an array of the rows...": >-
+    - "I just want an array of the rows...": >-
 
-      Use the Database#execute method. If you don't give it a block, it will
-      return an array of all the rows:
-
-
-      <pre>
-        require 'sqlite3'
-
-        db = SQLite3::Database.new( "test.db" )
-        rows = db.execute( "select * from test" )
-      </pre>
-
-  - "I'd like to use a block to iterate through the rows...": >-
-
-      Use the Database#execute method. If you give it a block, each row of the
-      result will be yielded to the block:
+        Use the Database#execute method. If you don't give it a block, it will
+        return an array of all the rows:
 
 
-      <pre>
-        require 'sqlite3'
+        <pre>
+          require 'sqlite3'
 
-        db = SQLite3::Database.new( "test.db" )
-        db.execute( "select * from test" ) do |row|
-          ...
-        end
-      </pre>
+          db = SQLite3::Database.new( "test.db" )
+          rows = db.execute( "select * from test" )
+        </pre>
 
-  - "I need to get the column names as well as the rows...": >-
+    - "I'd like to use a block to iterate through the rows...": >-
 
-      Use the Database#execute2 method. This works just like Database#execute;
-      if you don't give it a block, it returns an array of rows; otherwise, it
-      will yield each row to the block. _However_, the first row returned is
-      always an array of the column names from the query:
+        Use the Database#execute method. If you give it a block, each row of the
+        result will be yielded to the block:
 
 
-      <pre>
-        require 'sqlite3'
+        <pre>
+          require 'sqlite3'
 
-        db = SQLite3::Database.new( "test.db" )
-        columns, *rows = db.execute2( "select * from test" )
-
-        # or use a block:
-
-        columns = nil
-        db.execute2( "select * from test" ) do |row|
-          if columns.nil?
-            columns = row
-          else
-            # process row
+          db = SQLite3::Database.new( "test.db" )
+          db.execute( "select * from test" ) do |row|
+            ...
           end
-        end
-      </pre>
+        </pre>
 
-  - "I just want the first row of the result set...": >-
+    - "I need to get the column names as well as the rows...": >-
 
-      Easy. Just call Database#get_first_row:
-
-
-      <pre>
-        row = db.get_first_row( "select * from table" )
-      </pre>
+        Use the Database#execute2 method. This works just like Database#execute;
+        if you don't give it a block, it returns an array of rows; otherwise, it
+        will yield each row to the block. _However_, the first row returned is
+        always an array of the column names from the query:
 
 
-      This also supports bind variables, just like Database#execute
-      and friends.
+        <pre>
+          require 'sqlite3'
 
-  - "I just want the first value of the first row of the result set...": >-
+          db = SQLite3::Database.new( "test.db" )
+          columns, *rows = db.execute2( "select * from test" )
 
-      Also easy. Just call Database#get_first_value:
+          # or use a block:
+
+          columns = nil
+          db.execute2( "select * from test" ) do |row|
+            if columns.nil?
+              columns = row
+            else
+              # process row
+            end
+          end
+        </pre>
+
+    - "I just want the first row of the result set...": >-
+
+        Easy. Just call Database#get_first_row:
 
 
-      <pre>
-        count = db.get_first_value( "select count(*) from table" )
-      </pre>
+        <pre>
+          row = db.get_first_row( "select * from table" )
+        </pre>
 
 
-      This also supports bind variables, just like Database#execute
-      and friends.
+        This also supports bind variables, just like Database#execute
+        and friends.
+
+    - "I just want the first value of the first row of the result set...": >-
+
+        Also easy. Just call Database#get_first_value:
+
+
+        <pre>
+          count = db.get_first_value( "select count(*) from table" )
+        </pre>
+
+
+        This also supports bind variables, just like Database#execute
+        and friends.
 
 - "How do I prepare a statement for repeated execution?": >-
     If the same statement is going to be executed repeatedly, you can speed
@@ -86,7 +86,7 @@
     Database#prepare method. It returns a Statement object, and you can
     then invoke #execute on that to get the ResultSet:
 
-    
+
     <pre>
       stmt = db.prepare( "select * from person" )
 
@@ -184,7 +184,7 @@
 
     You can also bind explicitly using the Statement object itself. Just pass
     additional parameters to the Statement#execute statement:
-    
+
 
     <pre>
       db.prepare( "select * from table where a = :name and b = ?" ) do |stmt|
@@ -209,7 +209,7 @@
     </pre>
 
 - "How do I discover metadata about a query?": >-
-  
+
     If you ever want to know the names or types of the columns in a result
     set, you can do it in several ways.
 
@@ -289,7 +289,8 @@
       end
     </pre>
 
-- "I'd like the values from a query to be the correct types, instead of String.": >-
+- "I'd like the values from a query to be the correct types, instead of String.":
+    >-
     You can turn on "type translation" by setting Database#type_translation to
     true:
 
@@ -351,7 +352,7 @@
     as selects, but in general the Database#execute method will be most
     convenient:
 
-    
+
     <pre>
       db.execute( "insert into table values ( ?, ? )", *bind_vars )
     </pre>
@@ -397,10 +398,10 @@
 
 
     <pre>
-      database.transaction do |db|
-        db.execute( "insert into table values ( 'a', 'b', 'c' )" )
-        ...
-      end
+    database.transaction do |db|
+    db.execute( "insert into table values ( 'a', 'b', 'c' )" )
+    ...
+    end
     </pre>
 
 
@@ -410,9 +411,9 @@
 
 
     <pre>
-      db.transaction
-      db.execute( "insert into table values ( 'a', 'b', 'c' )" )
-      db.commit
+    db.transaction
+    db.execute( "insert into table values ( 'a', 'b', 'c' )" )
+    db.commit
     </pre>
 
 
@@ -420,7 +421,6 @@
     if you try to open a new transaction while one is already active. Use
     Database#transaction_active? to determine whether a transaction is
     active or not.
-
 #- "How do I discover metadata about a table/index?":
 #
 #- "How do I do tweak database settings?":

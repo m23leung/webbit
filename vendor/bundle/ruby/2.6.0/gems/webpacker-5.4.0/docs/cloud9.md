@@ -8,13 +8,13 @@ the [below](#binstub-versions).**
 
 ## Contents
 
-  - [Context](#context)
-  - [Binstub versions](#binstub-versions)
-  - [Quick solution](#quick-solution)
-  - [Flexible solution](#flexible-solution)
-  - [Sources](#sources)
-  - [Versions](#versions)
-  - [tl;dr](#tldr)
+- [Context](#context)
+- [Binstub versions](#binstub-versions)
+- [Quick solution](#quick-solution)
+- [Flexible solution](#flexible-solution)
+- [Sources](#sources)
+- [Versions](#versions)
+- [tl;dr](#tldr)
 
 ## Context
 
@@ -27,7 +27,7 @@ is sufficient if we work alone on a project, and a slightly more
 involved but [flexible approach](#flexible-solution), that can be
 useful when several people might work in the same codebase.
 
-[Cloud9]: https://c9.io
+[cloud9]: https://c9.io
 [`webpack-dev-server`]: https://github.com/webpack/webpack-dev-server
 [`webpacker`]: https://github.com/rails/webpacker
 
@@ -50,7 +50,7 @@ fair, the [changelog of v3.0.2] properly mentions the change:
 > - Added: Binstubs [#833]
 > - (...)
 > - Removed: Inline CLI args for dev server binstub, use env variables
-  instead
+>   instead
 
 [changelog of v3.0.2]: https://github.com/rails/webpacker/blob/v3.0.2/CHANGELOG.md#302---2017-10-04
 [v3.0.1/lib/install/bin/webpack-dev-server.tt]: https://github.com/rails/webpacker/blob/v3.0.1/lib/install/bin/webpack-dev-server.tt
@@ -106,8 +106,7 @@ mentioned [sources](#sources):
 
 - Some solutions suggested to set the [`host`][devserver-host] option
   to `your-workspace-name-yourusername.c9users.io`, which required to
-  add a line to the `/etc/hosts` file by running `echo "0.0.0.0
-  ${C9_HOSTNAME}" | sudo tee -a /etc/hosts`. This was only necessary
+  add a line to the `/etc/hosts` file by running `echo "0.0.0.0 ${C9_HOSTNAME}" | sudo tee -a /etc/hosts`. This was only necessary
   due to restrictions in previous versions of [`webpacker`] and how
   the value of the [`public`][devserver-public] setting was
   calculated. Currently it is [no longer necessary][pr-comment-hosts]
@@ -138,7 +137,6 @@ mentioned [sources](#sources):
   ```
 
   Setting `inline: false` removes the issue.
-
 
 - None of the solutions suggested to set the
   [`public`][devserver-public] option in the `config/webpacker.yml`
@@ -241,12 +239,12 @@ available to both `webpack-dev-server` and `rails server` processes.
 
 [original-article]: http://rbf.io/en/blog/2017/11/18/webpack-dev-server-and-rails-on-cloud9/
 [original-comment]: https://github.com/rails/webpacker/issues/176#issuecomment-345532309
-["Making Webpacker run on Cloud 9"]: https://github.com/rails/webpacker/issues/176
-["Anyone here got webpack-dev-server to work on Cloud 9?"]: https://github.com/webpack/webpack-dev-server/issues/230
+["making webpacker run on cloud 9"]: https://github.com/rails/webpacker/issues/176
+["anyone here got webpack-dev-server to work on cloud 9?"]: https://github.com/webpack/webpack-dev-server/issues/230
 [`webpacker` documentation]: https://github.com/rails/webpacker/tree/v3.0.2#development
 [`webpacker/dev_server.rb` code]: https://github.com/rails/webpacker/blob/v3.0.2/lib/webpacker/dev_server.rb#L55
 [`webpack-dev-server` documentation]: https://webpack.js.org/configuration/dev-server/
-["Using Rails With Webpack in Cloud 9"]: http://aalvarez.me/blog/posts/using-rails-with-webpack-in-cloud-9.html
+["using rails with webpack in cloud 9"]: http://aalvarez.me/blog/posts/using-rails-with-webpack-in-cloud-9.html
 
 ## Versions
 
@@ -293,18 +291,18 @@ Everything was tested using Chrome Version 62.
 
 1. Change the `development.dev_server` entry `config/webpacker.yml` file into:
 
-    ```yaml
-    dev_server:
-      https: true
-      host: localhost
-      port: 8082
-      public: your-workspace-name-yourusername.c9users.io:8082
-      hmr: false
-      inline: false
-      overlay: true
-      disable_host_check: true
-      use_local_ip: false
-    ```
+   ```yaml
+   dev_server:
+     https: true
+     host: localhost
+     port: 8082
+     public: your-workspace-name-yourusername.c9users.io:8082
+     hmr: false
+     inline: false
+     overlay: true
+     disable_host_check: true
+     use_local_ip: false
+   ```
 
 1. Now running as usual `./bin/webpack-dev-server` in one terminal and
    `./bin/rails s -b $IP -p $PORT` in another should work as expected.

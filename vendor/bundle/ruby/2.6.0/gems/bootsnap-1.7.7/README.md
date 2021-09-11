@@ -10,6 +10,7 @@ to optimize and cache expensive computations. See [How Does This Work](#how-does
 - One of our smaller internal apps also sees a reduction of 50%, from 3.6 to 1.8 seconds;
 - The core Shopify platform -- a rather large monolithic application -- boots about 75% faster,
   dropping from around 25s to 6.5s.
+
 * In Shopify core (a large app), about 25% of this gain can be attributed to `compile_cache_*`
   features; 75% to path caching. This is fairly representative.
 
@@ -30,7 +31,7 @@ require 'bootsnap/setup'
 ```
 
 Note that bootsnap writes to `tmp/cache` (or the path specified by `ENV['BOOTSNAP_CACHE_DIR']`),
-and that directory *must* be writable. Rails will fail to
+and that directory _must_ be writable. Rails will fail to
 boot if it is not. If this is unacceptable (e.g. you are running in a read-only container and
 unwilling to mount in a writable tmpdir), you should remove this line or wrap it in a conditional.
 
@@ -59,8 +60,7 @@ Bootsnap.setup(
 )
 ```
 
-**Protip:** You can replace `require 'bootsnap'` with `BootLib::Require.from_gem('bootsnap',
-'bootsnap')` using [this trick](https://github.com/Shopify/bootsnap/wiki/Bootlib::Require). This
+**Protip:** You can replace `require 'bootsnap'` with `BootLib::Require.from_gem('bootsnap', 'bootsnap')` using [this trick](https://github.com/Shopify/bootsnap/wiki/Bootlib::Require). This
 will help optimize boot time further if you have an extremely large `$LOAD_PATH`.
 
 Note: Bootsnap and [Spring](https://github.com/rails/spring) are orthogonal tools. While Bootsnap
@@ -106,24 +106,24 @@ Bootsnap.instrumentation = nil
 Bootsnap optimizes methods to cache results of expensive computations, and can be grouped
 into two broad categories:
 
-* [Path Pre-Scanning](#path-pre-scanning)
-    * `Kernel#require` and `Kernel#load` are modified to eliminate `$LOAD_PATH` scans.
-* [Compilation caching](#compilation-caching)
-    * `RubyVM::InstructionSequence.load_iseq` is implemented to cache the result of ruby bytecode
-      compilation.
-    * `YAML.load_file` is modified to cache the result of loading a YAML object in MessagePack format
-      (or Marshal, if the message uses types unsupported by MessagePack).
+- [Path Pre-Scanning](#path-pre-scanning)
+  - `Kernel#require` and `Kernel#load` are modified to eliminate `$LOAD_PATH` scans.
+- [Compilation caching](#compilation-caching)
+  - `RubyVM::InstructionSequence.load_iseq` is implemented to cache the result of ruby bytecode
+    compilation.
+  - `YAML.load_file` is modified to cache the result of loading a YAML object in MessagePack format
+    (or Marshal, if the message uses types unsupported by MessagePack).
 
 ### Path Pre-Scanning
 
-*(This work is a minor evolution of [bootscale](https://github.com/byroot/bootscale)).*
+_(This work is a minor evolution of [bootscale](https://github.com/byroot/bootscale))._
 
 Upon initialization of bootsnap or modification of the path (e.g. `$LOAD_PATH`),
 `Bootsnap::LoadPathCache` will fetch a list of requirable entries from a cache, or, if necessary,
 perform a full scan and cache the result.
 
-Later, when we run (e.g.) `require 'foo'`, ruby *would* iterate through every item on our
-`$LOAD_PATH` `['x', 'y', ...]`,  looking for `x/foo.rb`, `y/foo.rb`, and so on. Bootsnap instead
+Later, when we run (e.g.) `require 'foo'`, ruby _would_ iterate through every item on our
+`$LOAD_PATH` `['x', 'y', ...]`, looking for `x/foo.rb`, `y/foo.rb`, and so on. Bootsnap instead
 looks at all the cached requirables for each `$LOAD_PATH` entry and substitutes the full expanded
 path of the match ruby would have eventually chosen.
 
@@ -166,16 +166,14 @@ this diagram may help clarify how entry resolution works:
 
 ![How path searching works](https://cloud.githubusercontent.com/assets/3074765/25388270/670b5652-299b-11e7-87fb-975647f68981.png)
 
-
 It's also important to note how expensive `LoadError`s can be. If ruby invokes
-`require 'something'`, but that file isn't on `$LOAD_PATH`, it takes `2 *
-$LOAD_PATH.length` filesystem accesses to determine that. Bootsnap caches this
+`require 'something'`, but that file isn't on `$LOAD_PATH`, it takes `2 * $LOAD_PATH.length` filesystem accesses to determine that. Bootsnap caches this
 result too, raising a `LoadError` without touching the filesystem at all.
 
 ### Compilation Caching
 
-*(A more readable implementation of this concept can be found in
-[yomikomu](https://github.com/ko1/yomikomu)).*
+_(A more readable implementation of this concept can be found in
+[yomikomu](https://github.com/ko1/yomikomu))._
 
 Ruby has complex grammar and parsing it is not a particularly cheap operation. Since 1.9, Ruby has
 translated ruby source to an internal bytecode format, which is then executed by the Ruby VM. Since
@@ -184,7 +182,7 @@ allows caching that bytecode. This allows us to bypass the relatively-expensive 
 subsequent loads of the same file.
 
 We also noticed that we spend a lot of time loading YAML documents during our application boot, and
-that MessagePack and Marshal are *much* faster at deserialization than YAML, even with a fast
+that MessagePack and Marshal are _much_ faster at deserialization than YAML, even with a fast
 implementation. We use the same strategy of compilation caching for YAML documents, with the
 equivalent of Ruby's "bytecode" format being a MessagePack document (or, in the case of YAML
 documents with types unsupported by MessagePack, a Marshal stream).
@@ -224,20 +222,20 @@ close     n
 
 This may look worse at a glance, but underlies a large performance difference.
 
-*(The first three syscalls in both listings -- `open`, `fstat64`, `close` -- are not inherently
+_(The first three syscalls in both listings -- `open`, `fstat64`, `close` -- are not inherently
 useful. [This ruby patch](https://bugs.ruby-lang.org/issues/13378) optimizes them out when coupled
-with bootsnap.)*
+with bootsnap.)_
 
 Bootsnap writes a cache file containing a 64 byte header followed by the cache contents. The header
 is a cache key including several fields:
 
-* `version`, hardcoded in bootsnap. Essentially a schema version;
-* `ruby_platform`, A hash of `RUBY_PLATFORM` (e.g. x86_64-linux-gnu) variable and glibc version (on Linux) or OS version (`uname -v` on BSD, macOS)
-* `compile_option`, which changes with `RubyVM::InstructionSequence.compile_option` does;
-* `ruby_revision`, the version of Ruby this was compiled with;
-* `size`, the size of the source file;
-* `mtime`, the last-modification timestamp of the source file when it was compiled; and
-* `data_size`, the number of bytes following the header, which we need to read it into a buffer.
+- `version`, hardcoded in bootsnap. Essentially a schema version;
+- `ruby_platform`, A hash of `RUBY_PLATFORM` (e.g. x86_64-linux-gnu) variable and glibc version (on Linux) or OS version (`uname -v` on BSD, macOS)
+- `compile_option`, which changes with `RubyVM::InstructionSequence.compile_option` does;
+- `ruby_revision`, the version of Ruby this was compiled with;
+- `size`, the size of the source file;
+- `mtime`, the last-modification timestamp of the source file when it was compiled; and
+- `data_size`, the number of bytes following the header, which we need to read it into a buffer.
 
 If the key is valid, the result is loaded from the value. Otherwise, it is regenerated and clobbers
 the current cache.
@@ -261,7 +259,6 @@ And this `$LOAD_PATH`:
 ```
 
 When we call `require 'foo'` without bootsnap, Ruby would generate this sequence of syscalls:
-
 
 ```
 open    /a/foo.rb -> -1
@@ -306,7 +303,7 @@ open    /b/nope.bundle -> -1
 open    /c/nope.bundle -> -1
 ```
 
-...and if we call `require 'nope'` *with* bootsnap, we get...
+...and if we call `require 'nope'` _with_ bootsnap, we get...
 
 ```
 # (nothing!)
@@ -327,9 +324,9 @@ $ bundle exec bootsnap precompile --gemfile app/ lib/
 
 ## When not to use Bootsnap
 
-*Alternative engines*: Bootsnap is pretty reliant on MRI features, and parts are disabled entirely on alternative ruby
+_Alternative engines_: Bootsnap is pretty reliant on MRI features, and parts are disabled entirely on alternative ruby
 engines.
 
-*Non-local filesystems*: Bootsnap depends on `tmp/cache` (or whatever you set its cache directory
+_Non-local filesystems_: Bootsnap depends on `tmp/cache` (or whatever you set its cache directory
 to) being on a relatively fast filesystem. If you put it on a network mount, bootsnap is very likely
 to slow your application down quite a lot.

@@ -2,7 +2,7 @@
 
 A Global ID is an app wide URI that uniquely identifies a model instance:
 
-  gid://YourApp/Some::Model/id
+gid://YourApp/Some::Model/id
 
 This is helpful when you need a single identifier to reference different
 classes of objects.
@@ -16,7 +16,6 @@ references a model.
 Another example is a drop-down list of options, consisting of both Users and Groups.
 Normally we'd need to come up with our own ad hoc scheme to reference them. With Global
 IDs, we have a universal identifier that works for objects of both classes.
-
 
 ## Usage
 
@@ -118,6 +117,7 @@ explicit_expiring_sgid = SecretAgentMessage.find(5).to_sgid(expires_at: Time.now
 GlobalID::Locator.locate_signed explicit_expiring_sgid.to_s
 # => nil
 ```
+
 Note that an explicit `:expires_at` takes precedence over a relative `:expires_in`.
 
 **Purpose**
@@ -199,4 +199,5 @@ features and discuss issues.
 See [CONTRIBUTING](CONTRIBUTING.md).
 
 ## License
+
 GlobalID is released under the [MIT License](http://www.opensource.org/licenses/MIT).

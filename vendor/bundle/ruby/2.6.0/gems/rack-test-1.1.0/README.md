@@ -1,4 +1,5 @@
 # Rack::Test
+
 [![Gem Version](https://badge.fury.io/rb/rack-test.svg)](https://badge.fury.io/rb/rack-test)
 [<img src="https://travis-ci.org/rack-test/rack-test.svg?branch=master" />](https://travis-ci.org/rack-test/rack-test)
 [![Code Climate](https://codeclimate.com/github/rack-test/rack-test/badges/gpa.svg)](https://codeclimate.com/github/rack-test/rack-test)
@@ -14,25 +15,26 @@ to build on.
 
 ## Features
 
-* Maintains a cookie jar across requests
-* Easily follow redirects when desired
-* Set request headers to be used by all subsequent requests
-* Small footprint. Approximately 200 LOC
+- Maintains a cookie jar across requests
+- Easily follow redirects when desired
+- Set request headers to be used by all subsequent requests
+- Small footprint. Approximately 200 LOC
 
 ## Supported platforms
 
-* 2.2.2+
-* 2.3
-* 2.4
-* JRuby 9.1.+
+- 2.2.2+
+- 2.3
+- 2.4
+- JRuby 9.1.+
 
 If you are using Ruby 1.8, 1.9 or JRuby 1.7, use rack-test 0.6.3.
 
 ## Known incompatibilites
 
-* `rack-test >= 0.71` _does not_ work with older Capybara versions (`< 2.17`). See [#214](https://github.com/rack-test/rack-test/issues/214) for more details.
+- `rack-test >= 0.71` _does not_ work with older Capybara versions (`< 2.17`). See [#214](https://github.com/rack-test/rack-test/issues/214) for more details.
 
 ## Examples
+
 (The examples use `Test::Unit` but it's equally possible to use `rack-test` with other testing frameworks like `rspec`.)
 
 ```ruby
@@ -102,7 +104,6 @@ class TestApp < Test::Unit::TestCase
 end
 ```
 
-
 ## Install
 
 To install the latest release as a gem:
@@ -129,22 +130,23 @@ gem 'rack-test', github: 'rack-test', branch: 'master'
 - Much of the original code was extracted from Merb 1.0's request helper
 
 ## License
+
 `rack-test` is released under the [MIT License](MIT-LICENSE.txt).
 
 ## Contribution
 
 Contributions are welcome. Please make sure to:
 
-* Use a regular forking workflow
-* Write tests for the new or changed behaviour
-* Provide an explanation/motivation in your commit message / PR message
-* Ensure History.txt is updated
+- Use a regular forking workflow
+- Write tests for the new or changed behaviour
+- Provide an explanation/motivation in your commit message / PR message
+- Ensure History.txt is updated
 
 ## Releasing
 
-* Ensure `History.md` is up-to-date
-* Bump VERSION in lib/rack/test/version.rb
-* `git commit . -m 'Release 1.1.0'`
-* `git push`
-* bundle exec thor :release
-* Updated the [GitHub releases page](https://github.com/rack-test/rack-test/releases)
+- Ensure `History.md` is up-to-date
+- Bump VERSION in lib/rack/test/version.rb
+- `git commit . -m 'Release 1.1.0'`
+- `git push`
+- bundle exec thor :release
+- Updated the [GitHub releases page](https://github.com/rack-test/rack-test/releases)

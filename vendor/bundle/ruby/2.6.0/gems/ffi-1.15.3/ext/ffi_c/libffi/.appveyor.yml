@@ -50,7 +50,7 @@ install:
           $env:MSVCC="/cygdrive/c/projects/libffi/msvcc.sh -m64"
           $env:SRC_ARCHITECTURE="x86"
       }
-  - 'appveyor DownloadFile https://cygwin.com/setup-x86.exe -FileName setup.exe'
+  - "appveyor DownloadFile https://cygwin.com/setup-x86.exe -FileName setup.exe"
   - 'setup.exe -qnNdO -R "%CYG_ROOT%" -s "%CYG_MIRROR%" -l "%CYG_CACHE%" -P dejagnu >NUL'
   - '%CYG_ROOT%/bin/bash -lc "cygcheck -dc cygwin"'
   - echo call VsDevCmd to set VS150COMNTOOLS

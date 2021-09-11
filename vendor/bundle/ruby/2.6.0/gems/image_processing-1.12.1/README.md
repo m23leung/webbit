@@ -9,7 +9,6 @@ are migrating from another gem or library that uses ImageMagick. Libvips is a
 newer library that can process images [very rapidly][libvips performance]
 (often multiple times faster than ImageMagick).
 
-
 ## Goal
 
 The goal of this project is to have a single gem that contains all the
@@ -24,21 +23,19 @@ combine every great idea from all of these separate gems into a single awesome
 library that is constantly updated with best-practice thinking about
 how to resize and process images.
 
-
 ## Installation
 
 1. Install ImageMagick and/or libvips:
 
-  ```sh
-  $ brew install imagemagick vips
-  ```
+```sh
+$ brew install imagemagick vips
+```
 
 2. Add the gem to your Gemfile:
 
-  ```rb
-  gem "image_processing", "~> 1.0"
-  ```
-
+```rb
+gem "image_processing", "~> 1.0"
+```
 
 ## Usage
 
@@ -142,8 +139,8 @@ pipeline.call(destination: "/path/to/destination")
 
 You can continue reading the API documentation for specific modules:
 
-* **[`ImageProcessing::Vips`]**
-* **[`ImageProcessing::MiniMagick`]**
+- **[`ImageProcessing::Vips`]**
+- **[`ImageProcessing::MiniMagick`]**
 
 See the **[wiki]** for additional "How To" guides for common scenarios. The wiki
 is publicly editable, so you're encouraged to add your own guides.
@@ -191,12 +188,10 @@ Afterwards you can run tests with
 $ bundle exec rake test
 ```
 
-
 ## Feedback
 
 We welcome your feedback! What would you like to see added to image_processing?
 How can we improve this gem? Open an issue and let us know!
-
 
 ## Credits
 
@@ -204,17 +199,16 @@ The `ImageProcessing::MiniMagick` functionality was extracted from
 [refile-mini_magick]. The chainable interface was heavily inspired by
 [HTTP.rb].
 
-
 ## License
 
 [MIT](LICENSE.txt)
 
 [libvips]: http://libvips.github.io/libvips/
-[ImageMagick]: https://www.imagemagick.org
-[GraphicsMagick]: http://www.graphicsmagick.org
-[`ImageProcessing::Vips`]: doc/vips.md#readme
-[`ImageProcessing::MiniMagick`]: doc/minimagick.md#readme
+[imagemagick]: https://www.imagemagick.org
+[graphicsmagick]: http://www.graphicsmagick.org
+[`imageprocessing::vips`]: doc/vips.md#readme
+[`imageprocessing::minimagick`]: doc/minimagick.md#readme
 [refile-mini_magick]: https://github.com/refile/refile-mini_magick
 [wiki]: https://github.com/janko/image_processing/wiki
-[HTTP.rb]: https://github.com/httprb/http
+[http.rb]: https://github.com/httprb/http
 [libvips performance]: https://github.com/libvips/libvips/wiki/Speed-and-memory-use

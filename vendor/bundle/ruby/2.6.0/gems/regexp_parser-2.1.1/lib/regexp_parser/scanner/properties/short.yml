@@ -135,7 +135,7 @@ nchar: noncharacter_code_point
 nd: decimal_number
 nkoo: nko
 nl: letter_number
-'no': other_number
+"no": other_number
 nshu: nushu
 oalpha: other_alphabetic
 odi: other_default_ignorable_code_point

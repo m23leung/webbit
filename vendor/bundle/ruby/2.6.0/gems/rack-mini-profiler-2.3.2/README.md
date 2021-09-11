@@ -4,16 +4,16 @@ Middleware that displays speed badge for every html page. Designed to work both 
 
 #### Features
 
-* Database profiling - Currently supports Mysql2, Postgres, Oracle (oracle_enhanced ~> 1.5.0) and Mongoid3 (with fallback support to ActiveRecord)
-* Call-stack profiling - Flame graphs showing time spent by gem
-* Memory profiling - Per-request memory usage, GC stats, and global allocation metrics
+- Database profiling - Currently supports Mysql2, Postgres, Oracle (oracle_enhanced ~> 1.5.0) and Mongoid3 (with fallback support to ActiveRecord)
+- Call-stack profiling - Flame graphs showing time spent by gem
+- Memory profiling - Per-request memory usage, GC stats, and global allocation metrics
 
 #### Learn more
 
-* [Visit our community](http://community.miniprofiler.com)
-* [Watch the RailsCast](http://railscasts.com/episodes/368-miniprofiler)
-* [Read about Flame graphs in rack-mini-profiler](http://samsaffron.com/archive/2013/03/19/flame-graphs-in-ruby-miniprofiler)
-* [Read the announcement posts from 2012](http://samsaffron.com/archive/2012/07/12/miniprofiler-ruby-edition)
+- [Visit our community](http://community.miniprofiler.com)
+- [Watch the RailsCast](http://railscasts.com/episodes/368-miniprofiler)
+- [Read about Flame graphs in rack-mini-profiler](http://samsaffron.com/archive/2013/03/19/flame-graphs-in-ruby-miniprofiler)
+- [Read the announcement posts from 2012](http://samsaffron.com/archive/2012/07/12/miniprofiler-ruby-edition)
 
 ## rack-mini-profiler needs your help
 
@@ -36,6 +36,7 @@ gem 'rack-mini-profiler'
 NOTE: Be sure to require rack_mini_profiler below the `pg` and `mysql` gems in your Gemfile. rack_mini_profiler will identify these gems if they are loaded to insert instrumentation. If included too early no SQL will show up.
 
 You can also include optional libraries to enable additional features.
+
 ```ruby
 # For memory profiling
 gem 'memory_profiler'
@@ -53,11 +54,13 @@ All you have to do is to include the Gem and you're good to go in development. S
 Prior to version 2.0.0, Mini Profiler patched various Rails methods to get the information it needed such as template rendering time. Starting from version 2.0.0, Mini Profiler doesn't patch any Rails methods by default and relies on `ActiveSupport::Notifications` to get the information it needs from Rails. If you want Mini Profiler to keep using its patches in version 2.0.0 and later, change the gem line in your `Gemfile` to the following:
 
 If you want to manually require Mini Profiler:
+
 ```ruby
 gem 'rack-mini-profiler', require: ['enable_rails_patches']
 ```
 
 If you don't want to manually require Mini Profiler:
+
 ```ruby
 gem 'rack-mini-profiler', require: ['enable_rails_patches', 'rack-mini-profiler']
 ```
@@ -95,6 +98,7 @@ In case you need to make sure rack_mini_profiler is initialized after all other 
 ```ruby
 gem 'rack-mini-profiler', require: false
 ```
+
 Note the `require: false` part - if omitted, it will cause the Railtie for the mini-profiler to
 be loaded outright, and an attempt to re-initialize it manually will raise an exception.
 
@@ -131,6 +135,7 @@ end
 ```
 
 #### Hanami
+
 For working with hanami, you need to use rack integration. Also, you need to add `Hanami::View::Rendering::Partial#render` method for profile:
 
 ```ruby
@@ -168,8 +173,8 @@ export RACK_MINI_PROFILER_PATCH="false"
 
 To generate [flamegraphs](http://samsaffron.com/archive/2013/03/19/flame-graphs-in-ruby-miniprofiler):
 
-* add the [**stackprof**](https://rubygems.org/gems/stackprof) gem to your Gemfile
-* visit a page in your app with `?pp=flamegraph`
+- add the [**stackprof**](https://rubygems.org/gems/stackprof) gem to your Gemfile
+- visit a page in your app with `?pp=flamegraph`
 
 To store flamegraph data for later viewing, append the `?pp=async-flamegraph` parameter. The request will return as normal.
 Flamegraph data for this request, and all subsequent requests made by this page (based on the `REFERER` header) will be stored.
@@ -184,9 +189,9 @@ Add `?pp=profile-memory` to the URL of any request while Rack::MiniProfiler is e
 
 Additional query parameters can be used to filter the results.
 
-* `memory_profiler_allow_files` - filename pattern to include (default is all files)
-* `memory_profiler_ignore_files` - filename pattern to exclude (default is no exclusions)
-* `memory_profiler_top` - number of results per section (defaults to 50)
+- `memory_profiler_allow_files` - filename pattern to include (default is all files)
+- `memory_profiler_ignore_files` - filename pattern to exclude (default is no exclusions)
+- `memory_profiler_top` - number of results per section (defaults to 50)
 
 The allow/ignore patterns will be treated as regular expressions.
 
@@ -194,8 +199,8 @@ Example: `?pp=profile-memory&memory_profiler_allow_files=active_record|app`
 
 There are two additional `pp` options that can be used to analyze memory which do not require the `memory_profiler` gem
 
-* Use `?pp=profile-gc` to report on Garbage Collection statistics
-* Use `?pp=analyze-memory` to report on ObjectSpace statistics
+- Use `?pp=profile-gc` to report on Garbage Collection statistics
+- Use `?pp=analyze-memory` to report on ObjectSpace statistics
 
 ### Snapshots Sampling
 
@@ -213,7 +218,7 @@ Mini Profiler will keep a maximum of 1000 snapshots by default, and you can chan
 
 Mini Profiler can be configured so that it sends snapshots over HTTP using the snapshots transporter. The main use-case of the transporter is to allow the aggregation of snapshots from multiple applications/sources in a single place. To enable the snapshots transporter, you need to provide a destination URL to the `snapshots_transport_destination_url` config, and a secure key to the `snapshots_transport_auth_key` config (will be used for authorization). Both of these configs are required for the transporter to be enabled.
 
-The transporter uses a buffer to temporarily hold snapshots in memory with a limit of 100 snapshots. Every 30 seconds, *if* the buffer is not empty, the transporter will make a `POST` request with the buffer content to the destination URL. Requests made by the transporter will have a `Mini-Profiler-Transport-Auth` header with the value of the `snapshots_transport_auth_key` config. The destination should only accept requests that include this header AND the header's value matches the key you set to the `snapshots_transport_auth_key` config.
+The transporter uses a buffer to temporarily hold snapshots in memory with a limit of 100 snapshots. Every 30 seconds, _if_ the buffer is not empty, the transporter will make a `POST` request with the buffer content to the destination URL. Requests made by the transporter will have a `Mini-Profiler-Transport-Auth` header with the value of the `snapshots_transport_auth_key` config. The destination should only accept requests that include this header AND the header's value matches the key you set to the `snapshots_transport_auth_key` config.
 
 If the specified destination responds with a non-200 status code, the transporter will increase the interval between requests by `2^n` seconds where `n` is the number of failed requests since the last successful request. The base interval between requests is 30 seconds. So if a request fails, the next request will be `30 + 2^1 = 32` seconds later. If the next request fails too, the next one will be `30 + 2^2 = 34` seconds later and so on until a request succeeds at which point the interval will return to 30 seconds. The interval will not go beyond 1 hour.
 
@@ -257,7 +262,6 @@ By default in production we attempt to set the authorization mode to `:allow_aut
 
 In development we run in the `:allow_all` authorization mode meaning every request is profiled and displayed to the end user.
 
-
 ## Configuration
 
 Various aspects of rack-mini-profiler's behavior can be configured when your app boots.
@@ -284,7 +288,7 @@ rack-mini-profiler stores its results so they can be shared later and aren't los
 
 There are 4 storage options: `MemoryStore`, `RedisStore`, `MemcacheStore`, and `FileStore`.
 
-`FileStore` is the default in Rails environments and will write files to `tmp/miniprofiler/*`.  `MemoryStore` is the default otherwise.
+`FileStore` is the default in Rails environments and will write files to `tmp/miniprofiler/*`. `MemoryStore` is the default otherwise.
 
 ```ruby
 # set MemoryStore
@@ -353,18 +357,40 @@ window.MiniProfiler.pageTransition();
 This method will remove profiling information that was related to previous page and clear aggregate statistics.
 
 #### MiniProfiler's speed badge on pages that are not generated via Rails
+
 You need to inject the following in your SPA to load MiniProfiler's speed badge ([extra details surrounding this script](https://github.com/MiniProfiler/rack-mini-profiler/issues/139#issuecomment-192880706)):
 
 ```html
- <script async type="text/javascript" id="mini-profiler" src="/mini-profiler-resources/includes.js?v=12b4b45a3c42e6e15503d7a03810ff33" data-version="12b4b45a3c42e6e15503d7a03810ff33" data-path="/mini-profiler-resources/" data-current-id="redo66j4g1077kto8uh3" data-ids="redo66j4g1077kto8uh3" data-horizontal-position="left" data-vertical-position="top" data-trivial="false" data-children="false" data-max-traces="10" data-controls="false" data-authorized="true" data-toggle-shortcut="Alt+P" data-start-hidden="false" data-collapse-results="true"></script>
+<script
+  async
+  type="text/javascript"
+  id="mini-profiler"
+  src="/mini-profiler-resources/includes.js?v=12b4b45a3c42e6e15503d7a03810ff33"
+  data-version="12b4b45a3c42e6e15503d7a03810ff33"
+  data-path="/mini-profiler-resources/"
+  data-current-id="redo66j4g1077kto8uh3"
+  data-ids="redo66j4g1077kto8uh3"
+  data-horizontal-position="left"
+  data-vertical-position="top"
+  data-trivial="false"
+  data-children="false"
+  data-max-traces="10"
+  data-controls="false"
+  data-authorized="true"
+  data-toggle-shortcut="Alt+P"
+  data-start-hidden="false"
+  data-collapse-results="true"
+></script>
 ```
 
 _Note:_ The GUID (`data-version` and the `?v=` parameter on the `src`) will change with each release of `rack_mini_profiler`. The MiniProfiler's speed badge will continue to work, although you will have to change the GUID to expire the script to fetch the most recent version.
 
 #### Using MiniProfiler's built in route for apps without HTML responses
+
 MiniProfiler also ships with a `/rack-mini-profiler/requests` route that displays the speed badge on a blank HTML page. This can be useful when profiling an application that does not render HTML.
 
 #### Register MiniProfiler's assets in the Rails assets pipeline
+
 MiniProfiler can be configured so it registers its assets in the assets pipeline. To do that, you'll need to provide a lambda (or proc) to the `assets_url` config (see the below section). The callback will receive 3 arguments which are: `name` represents asset name (currently it's either `rack-mini-profiling.js` or `rack-mini-profiling.css`), `assets_version` is a 32 characters long hash of MiniProfiler's assets, and `env` which is the `env` object of the request. MiniProfiler expects the `assets_url` callback to return a URL from which the asset can be loaded (the return value will be used as a `href`/`src` attribute in the DOM). If the `assets_url` callback is not set (the default) or it returns a non-truthy value, MiniProfiler will fallback to loading assets from its own middleware (`/mini-profiler-resources/*`). The following callback should work for most applications:
 
 ```ruby
@@ -382,49 +408,49 @@ For example:
 Rack::MiniProfiler.config.position = 'bottom-right'
 Rack::MiniProfiler.config.start_hidden = true
 ```
+
 The available configuration options are:
 
-Option|Default|Description
--------|---|--------
-pre_authorize_cb|Rails: dev only<br>Rack: always on|A lambda callback that returns true to make mini_profiler visible on a given request.
-position|`'top-left'`|Display mini_profiler on `'top-right'`, `'top-left'`, `'bottom-right'` or `'bottom-left'`.
-skip_paths|`[]`|An array of paths that skip profiling. Both `String` and `Regexp` are acceptable in the array.
-skip_schema_queries|Rails dev: `true`<br>Othwerwise: `false`|`true` to skip schema queries.
-auto_inject|`true`|`true` to inject the miniprofiler script in the page.
-backtrace_ignores|`[]`|Regexes of lines to be removed from backtraces.
-backtrace_includes|Rails: `[/^\/?(app\|config\|lib\|test)/]`<br>Rack: `[]`|Regexes of lines to keep in backtraces.
-backtrace_remove|rails: `Rails.root`<br>Rack: `nil`|A string or regex to remove part of each line in the backtrace.
-toggle_shortcut|Alt+P|Keyboard shortcut to toggle the mini_profiler's visibility. See [jquery.hotkeys](https://github.com/jeresig/jquery.hotkeys).
-start_hidden|`false`|`false` to make mini_profiler visible on page load.
-backtrace_threshold_ms|`0`|Minimum SQL query elapsed time before a backtrace is recorded.
-flamegraph_sample_rate|`0.5`|How often to capture stack traces for flamegraphs in milliseconds.
-base_url_path|`'/mini-profiler-resources/'`|Path for assets; added as a prefix when naming assets and sought when responding to requests.
-collapse_results|`true`|If multiple timing results exist in a single page, collapse them till clicked.
-max_traces_to_show|20|Maximum number of mini profiler timing blocks to show on one page
-html_container|`body`|The HTML container (as a jQuery selector) to inject the mini_profiler UI into
-show_total_sql_count|`false`|Displays the total number of SQL executions.
-enable_advanced_debugging_tools|`false`|Enables sensitive debugging tools that can be used via the UI. In production we recommend keeping this disabled as memory and environment debugging tools can expose contents of memory that may contain passwords.
-assets_url|`nil`|See the "Register MiniProfiler's assets in the Rails assets pipeline" section above.
-snapshot_every_n_requests|`-1`|Determines how frequently snapshots are taken. See the "Snapshots Sampling" above for more details.
-snapshots_limit|`1000`|Determines how many snapshots Mini Profiler is allowed to keep.
-snapshot_hidden_custom_fields|`[]`|Each snapshot custom field will have a dedicated column in the UI by default. Use this config to exclude certain custom fields from having their own columns.
-snapshots_transport_destination_url|`nil`|Set this config to a valid URL to enable snapshots transporter which will `POST` snapshots to the given URL. The transporter requires `snapshots_transport_auth_key` config to be set as well.
-snapshots_transport_auth_key|`nil`|`POST` requests made by the snapshots transporter to the destination URL will have a `Mini-Profiler-Transport-Auth` header with the value of this config. Make sure you use a secure and random key for this config.
-snapshots_redact_sql_queries|`true`|When this is true, SQL queries will be redacted from sampling snapshots, but the backtrace and duration of each SQL query will be saved with the snapshot to keep debugging performance issues possible.
-snapshots_transport_gzip_requests|`false`|Make the snapshots transporter gzip the requests it makes to `snapshots_transport_destination_url`.
+| Option                              | Default                                                 | Description                                                                                                                                                                                                          |
+| ----------------------------------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| pre_authorize_cb                    | Rails: dev only<br>Rack: always on                      | A lambda callback that returns true to make mini_profiler visible on a given request.                                                                                                                                |
+| position                            | `'top-left'`                                            | Display mini_profiler on `'top-right'`, `'top-left'`, `'bottom-right'` or `'bottom-left'`.                                                                                                                           |
+| skip_paths                          | `[]`                                                    | An array of paths that skip profiling. Both `String` and `Regexp` are acceptable in the array.                                                                                                                       |
+| skip_schema_queries                 | Rails dev: `true`<br>Othwerwise: `false`                | `true` to skip schema queries.                                                                                                                                                                                       |
+| auto_inject                         | `true`                                                  | `true` to inject the miniprofiler script in the page.                                                                                                                                                                |
+| backtrace_ignores                   | `[]`                                                    | Regexes of lines to be removed from backtraces.                                                                                                                                                                      |
+| backtrace_includes                  | Rails: `[/^\/?(app\|config\|lib\|test)/]`<br>Rack: `[]` | Regexes of lines to keep in backtraces.                                                                                                                                                                              |
+| backtrace_remove                    | rails: `Rails.root`<br>Rack: `nil`                      | A string or regex to remove part of each line in the backtrace.                                                                                                                                                      |
+| toggle_shortcut                     | Alt+P                                                   | Keyboard shortcut to toggle the mini_profiler's visibility. See [jquery.hotkeys](https://github.com/jeresig/jquery.hotkeys).                                                                                         |
+| start_hidden                        | `false`                                                 | `false` to make mini_profiler visible on page load.                                                                                                                                                                  |
+| backtrace_threshold_ms              | `0`                                                     | Minimum SQL query elapsed time before a backtrace is recorded.                                                                                                                                                       |
+| flamegraph_sample_rate              | `0.5`                                                   | How often to capture stack traces for flamegraphs in milliseconds.                                                                                                                                                   |
+| base_url_path                       | `'/mini-profiler-resources/'`                           | Path for assets; added as a prefix when naming assets and sought when responding to requests.                                                                                                                        |
+| collapse_results                    | `true`                                                  | If multiple timing results exist in a single page, collapse them till clicked.                                                                                                                                       |
+| max_traces_to_show                  | 20                                                      | Maximum number of mini profiler timing blocks to show on one page                                                                                                                                                    |
+| html_container                      | `body`                                                  | The HTML container (as a jQuery selector) to inject the mini_profiler UI into                                                                                                                                        |
+| show_total_sql_count                | `false`                                                 | Displays the total number of SQL executions.                                                                                                                                                                         |
+| enable_advanced_debugging_tools     | `false`                                                 | Enables sensitive debugging tools that can be used via the UI. In production we recommend keeping this disabled as memory and environment debugging tools can expose contents of memory that may contain passwords.  |
+| assets_url                          | `nil`                                                   | See the "Register MiniProfiler's assets in the Rails assets pipeline" section above.                                                                                                                                 |
+| snapshot_every_n_requests           | `-1`                                                    | Determines how frequently snapshots are taken. See the "Snapshots Sampling" above for more details.                                                                                                                  |
+| snapshots_limit                     | `1000`                                                  | Determines how many snapshots Mini Profiler is allowed to keep.                                                                                                                                                      |
+| snapshot_hidden_custom_fields       | `[]`                                                    | Each snapshot custom field will have a dedicated column in the UI by default. Use this config to exclude certain custom fields from having their own columns.                                                        |
+| snapshots_transport_destination_url | `nil`                                                   | Set this config to a valid URL to enable snapshots transporter which will `POST` snapshots to the given URL. The transporter requires `snapshots_transport_auth_key` config to be set as well.                       |
+| snapshots_transport_auth_key        | `nil`                                                   | `POST` requests made by the snapshots transporter to the destination URL will have a `Mini-Profiler-Transport-Auth` header with the value of this config. Make sure you use a secure and random key for this config. |
+| snapshots_redact_sql_queries        | `true`                                                  | When this is true, SQL queries will be redacted from sampling snapshots, but the backtrace and duration of each SQL query will be saved with the snapshot to keep debugging performance issues possible.             |
+| snapshots_transport_gzip_requests   | `false`                                                 | Make the snapshots transporter gzip the requests it makes to `snapshots_transport_destination_url`.                                                                                                                  |
 
 ### Using MiniProfiler with `Rack::Deflate` middleware
 
 If you are using `Rack::Deflate` with Rails and `rack-mini-profiler` in its default configuration,
 `Rack::MiniProfiler` will be injected (as always) at position 0 in the middleware stack,
 which means it will run after `Rack::Deflate` on response processing. To prevent attempting to inject
-HTML in already compressed response body MiniProfiler will suppress compression by setting 
+HTML in already compressed response body MiniProfiler will suppress compression by setting
 `identity` encoding in `Accept-Encoding` request header.
 
 ## Special query strings
 
 If you include the query string `pp=help` at the end of your request you will see the various options available. You can use these options to extend or contract the amount of diagnostics rack-mini-profiler gathers.
-
 
 ## Rails 2.X support
 

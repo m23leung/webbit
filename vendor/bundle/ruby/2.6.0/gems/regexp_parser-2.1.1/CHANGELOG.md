@@ -5,37 +5,37 @@
 ### Fixed
 
 - fixed `NameError` when requiring only `'regexp_parser/scanner'` in v2.1.0
-  * thanks to [Jared White and Sam Ruby](https://github.com/ruby2js/ruby2js) for the report
+  - thanks to [Jared White and Sam Ruby](https://github.com/ruby2js/ruby2js) for the report
 
 ## [2.1.0] - 2021-02-22 - [Janosch Müller](mailto:janosch84@gmail.com)
 
 ### Added
 
 - common ancestor for all scanning/parsing/lexing errors
-  * `Regexp::Parser::Error` can now be rescued as a catch-all
-  * the following errors (and their many descendants) now inherit from it:
+  - `Regexp::Parser::Error` can now be rescued as a catch-all
+  - the following errors (and their many descendants) now inherit from it:
     - `Regexp::Expression::Conditional::TooManyBranches`
     - `Regexp::Parser::ParserError`
     - `Regexp::Scanner::ScannerError`
     - `Regexp::Scanner::ValidationError`
     - `Regexp::Syntax::SyntaxError`
-  * it replaces `ArgumentError` in some rare cases (`Regexp::Parser.parse('?')`)
-  * thanks to [sandstrom](https://github.com/sandstrom) for the cue
+  - it replaces `ArgumentError` in some rare cases (`Regexp::Parser.parse('?')`)
+  - thanks to [sandstrom](https://github.com/sandstrom) for the cue
 
 ### Fixed
 
 - fixed scanning of whole-pattern recursion calls `\g<0>` and `\g'0'`
-  * a regression in v2.0.1 had caused them to be scanned as literals
+  - a regression in v2.0.1 had caused them to be scanned as literals
 - fixed scanning of some backreference and subexpression call edge cases
-  * e.g. `\k<+1>`, `\g<x-1>`
+  - e.g. `\k<+1>`, `\g<x-1>`
 - fixed tokenization of some escapes in character sets
-  * `.`, `|`, `{`, `}`, `(`, `)`, `^`, `$`, `?`, `+`, `*`
-  * all of these correctly emitted `#type` `:literal` and `#token` `:literal` if *not* escaped
-  * if escaped, they emitted e.g. `#type` `:escape` and `#token` `:group_open` for `[\(]`
-  * the escaped versions now correctly emit `#type` `:escape` and `#token` `:literal`
+  - `.`, `|`, `{`, `}`, `(`, `)`, `^`, `$`, `?`, `+`, `*`
+  - all of these correctly emitted `#type` `:literal` and `#token` `:literal` if _not_ escaped
+  - if escaped, they emitted e.g. `#type` `:escape` and `#token` `:group_open` for `[\(]`
+  - the escaped versions now correctly emit `#type` `:escape` and `#token` `:literal`
 - fixed handling of control/metacontrol escapes in character sets
-  * e.g. `[\cX]`, `[\M-\C-X]`
-  * they were misread as bunch of individual literals, escapes, and ranges
+  - e.g. `[\cX]`, `[\M-\C-X]`
+  - they were misread as bunch of individual literals, escapes, and ranges
 - fixed some cases where calling `#dup`/`#clone` on expressions led to shared state
 
 ## [2.0.3] - 2020-12-28 - [Janosch Müller](mailto:janosch84@gmail.com)
@@ -43,61 +43,61 @@
 ### Fixed
 
 - fixed error when scanning some unlikely and redundant but valid charset patterns
-  * e.g. `/[[.a-b.]]/`, `/[[=e=]]/`,
+  - e.g. `/[[.a-b.]]/`, `/[[=e=]]/`,
 - fixed ancestry of some error classes related to syntax version lookup
-  * `NotImplementedError`, `InvalidVersionNameError`, `UnknownSyntaxNameError`
-  * they now correctly inherit from `Regexp::Syntax::SyntaxError` instead of Rubys `::SyntaxError`
+  - `NotImplementedError`, `InvalidVersionNameError`, `UnknownSyntaxNameError`
+  - they now correctly inherit from `Regexp::Syntax::SyntaxError` instead of Rubys `::SyntaxError`
 
 ## [2.0.2] - 2020-12-25 - [Janosch Müller](mailto:janosch84@gmail.com)
 
 ### Fixed
 
 - fixed `FrozenError` when calling `#to_s` on a frozen `Group::Passive`
-  * thanks to [Daniel Gollahon](https://github.com/dgollahon)
+  - thanks to [Daniel Gollahon](https://github.com/dgollahon)
 
 ## [2.0.1] - 2020-12-20 - [Janosch Müller](mailto:janosch84@gmail.com)
 
 ### Fixed
 
 - fixed error when scanning some group names
-  * this affected names containing hyphens, digits or multibyte chars, e.g. `/(?<a1>a)/`
-  * thanks to [Daniel Gollahon](https://github.com/dgollahon) for the report
+  - this affected names containing hyphens, digits or multibyte chars, e.g. `/(?<a1>a)/`
+  - thanks to [Daniel Gollahon](https://github.com/dgollahon) for the report
 - fixed error when scanning hex escapes with just one hex digit
-  * e.g. `/\x0A/` was scanned correctly, but the equivalent `/\xA/` was not
-  * thanks to [Daniel Gollahon](https://github.com/dgollahon) for the report
+  - e.g. `/\x0A/` was scanned correctly, but the equivalent `/\xA/` was not
+  - thanks to [Daniel Gollahon](https://github.com/dgollahon) for the report
 
 ## [2.0.0] - 2020-11-25 - [Janosch Müller](mailto:janosch84@gmail.com)
 
 ### Changed
 
 - some methods that used to return byte-based indices now return char-based indices
-  * the returned values have only changed for Regexps that contain multibyte chars
-  * this is only a breaking change if you used such methods directly AND relied on them pointing to bytes
-  * affected methods:
-  * `Regexp::Token` `#length`, `#offset`, `#te`, `#ts`
-  * `Regexp::Expression::Base` `#full_length`, `#offset`, `#starts_at`, `#te`, `#ts`
-  * thanks to [Akinori MUSHA](https://github.com/knu) for the report
+  - the returned values have only changed for Regexps that contain multibyte chars
+  - this is only a breaking change if you used such methods directly AND relied on them pointing to bytes
+  - affected methods:
+  - `Regexp::Token` `#length`, `#offset`, `#te`, `#ts`
+  - `Regexp::Expression::Base` `#full_length`, `#offset`, `#starts_at`, `#te`, `#ts`
+  - thanks to [Akinori MUSHA](https://github.com/knu) for the report
 - removed some deprecated methods/signatures
-  * these are rarely used and have been showing deprecation warnings for a long time
-  * `Regexp::Expression::Subexpression.new` with 3 arguments
-  * `Regexp::Expression::Root.new` without a token argument
-  * `Regexp::Expression.parsed`
+  - these are rarely used and have been showing deprecation warnings for a long time
+  - `Regexp::Expression::Subexpression.new` with 3 arguments
+  - `Regexp::Expression::Root.new` without a token argument
+  - `Regexp::Expression.parsed`
 
 ### Added
 
 - `Regexp::Expression::Base#base_length`
-  * returns the character count of an expression body, ignoring any quantifier
+  - returns the character count of an expression body, ignoring any quantifier
 - pragmatic, experimental support for chained quantifiers
-  * e.g.: `/^a{10}{4,6}$/` matches exactly 40, 50 or 60 `a`s
-  * successive quantifiers used to be silently dropped by the parser
-  * they are now wrapped with passive groups as if they were written `(?:a{10}){4,6}`
-  * thanks to [calfeld](https://github.com/calfeld) for reporting this a while back
+  - e.g.: `/^a{10}{4,6}$/` matches exactly 40, 50 or 60 `a`s
+  - successive quantifiers used to be silently dropped by the parser
+  - they are now wrapped with passive groups as if they were written `(?:a{10}){4,6}`
+  - thanks to [calfeld](https://github.com/calfeld) for reporting this a while back
 
 ### Fixed
 
 - incorrect encoding output for non-ascii comments
-  * this led to a crash when calling `#to_s` on parse results containing such comments
-  * thanks to [Michael Glass](https://github.com/michaelglass) for the report
+  - this led to a crash when calling `#to_s` on parse results containing such comments
+  - thanks to [Michael Glass](https://github.com/michaelglass) for the report
 - some crashes when scanning contrived patterns such as `'\😋'`
 
 ### [1.8.2] - 2020-10-11 - [Janosch Müller](mailto:janosch84@gmail.com)
@@ -105,7 +105,7 @@
 ### Fixed
 
 - fix `FrozenError` in `Expression::Base#repetitions` on Ruby 3.0
-  * thanks to [Thomas Walpole](https://github.com/twalpole)
+  - thanks to [Thomas Walpole](https://github.com/twalpole)
 - removed "unknown future version" warning on Ruby 3.0
 
 ### [1.8.1] - 2020-09-28 - [Janosch Müller](mailto:janosch84@gmail.com)
@@ -113,10 +113,10 @@
 ### Fixed
 
 - fixed scanning of comment-like text in normal mode
-  * this was an old bug, but had become more prevalent in v1.8.0
-  * thanks to [Tietew](https://github.com/Tietew) for the report
+  - this was an old bug, but had become more prevalent in v1.8.0
+  - thanks to [Tietew](https://github.com/Tietew) for the report
 - specified correct minimum Ruby version in gemspec
-  * it said 1.9 but really required 2.0 as of v1.8.0
+  - it said 1.9 but really required 2.0 as of v1.8.0
 
 ### [1.8.0] - 2020-09-20 - [Janosch Müller](mailto:janosch84@gmail.com)
 
@@ -127,16 +127,16 @@
 ### Added
 
 - regexp flags can now be passed when parsing a `String` as regexp body
-  * see the [README](/README.md#usage) for details
-  * thanks to [Owen Stephens](https://github.com/owst)
+  - see the [README](/README.md#usage) for details
+  - thanks to [Owen Stephens](https://github.com/owst)
 - bare occurrences of `\g` and `\k` are now allowed and scanned as literal escapes
-  * matches Onigmo behavior
-  * thanks for the report to [Marc-André Lafortune](https://github.com/marcandre)
+  - matches Onigmo behavior
+  - thanks for the report to [Marc-André Lafortune](https://github.com/marcandre)
 
 ### Fixed
 
 - fixed parsing comments without preceding space or trailing newline in x-mode
-  * thanks to [Owen Stephens](https://github.com/owst)
+  - thanks to [Owen Stephens](https://github.com/owst)
 
 ### [1.7.1] - 2020-06-07 - [Ammar Ali](mailto:ammarabuali@gmail.com)
 
@@ -150,8 +150,8 @@
 ### Added
 
 - `Expression#each_expression` and `#traverse` can now be called without a block
-  * this returns an `Enumerator` and allows chaining, e.g. `each_expression.select`
-  * thanks to [Masataka Kuwabara](https://github.com/pocke)
+  - this returns an `Enumerator` and allows chaining, e.g. `each_expression.select`
+  - thanks to [Masataka Kuwabara](https://github.com/pocke)
 
 ### Fixed
 
@@ -168,9 +168,9 @@
 ### Fixed
 
 - Fixed `#options` (and thus `#i?`, `#u?` etc.) not being set for some expressions:
-  * this affected posix classes as well as alternation, conditional, and intersection branches
-  * `#options` was already correct for all child expressions of such branches
-  * this only made an operational difference for posix classes as they respect encoding flags
+  - this affected posix classes as well as alternation, conditional, and intersection branches
+  - `#options` was already correct for all child expressions of such branches
+  - this only made an operational difference for posix classes as they respect encoding flags
 - Fixed `#options` not respecting all negative options in weird cases like '(?u-m-x)'
 - Fixed `Group#option_changes` not accounting for indirectly disabled (overridden) encoding flags
 - Fixed `Scanner` allowing negative encoding options if there were no positive options, e.g. '(?-u)'
@@ -182,26 +182,26 @@
 ### Added
 
 - Added `#referenced_expression` for backrefs, subexp calls and conditionals
-  * returns the `Group` expression that is being referenced via name or number
+  - returns the `Group` expression that is being referenced via name or number
 - Added `Expression#repetitions`
-  * returns a `Range` of allowed repetitions (`1..1` if there is no quantifier)
-  * like `#quantity` but with a more uniform interface
+  - returns a `Range` of allowed repetitions (`1..1` if there is no quantifier)
+  - like `#quantity` but with a more uniform interface
 - Added `Expression#match_length`
-  * allows to inspect and iterate over String lengths matched by the Expression
+  - allows to inspect and iterate over String lengths matched by the Expression
 
 ### Fixed
 
 - Fixed `Expression#clone` "direction"
-  * it used to dup ivars onto the callee, leaving only the clone referencing the original objects
-  * this will affect you if you call `#eql?`/`#equal?` on expressions or use them as Hash keys
+  - it used to dup ivars onto the callee, leaving only the clone referencing the original objects
+  - this will affect you if you call `#eql?`/`#equal?` on expressions or use them as Hash keys
 - Fixed `#clone` results for `Sequences`, e.g. alternations and conditionals
-  * the inner `#text` was cloned onto the `Sequence` and thus duplicated
-  * e.g. `Regexp::Parser.parse(/(a|bc)/).clone.to_s # => (aa|bcbc)`
+  - the inner `#text` was cloned onto the `Sequence` and thus duplicated
+  - e.g. `Regexp::Parser.parse(/(a|bc)/).clone.to_s # => (aa|bcbc)`
 - Fixed inconsistent `#to_s` output for `Sequences`
-  * it used to return only the "specific" text, e.g. "|" for an alternation
-  * now it includes nested expressions as it does for all other `Subexpressions`
+  - it used to return only the "specific" text, e.g. "|" for an alternation
+  - now it includes nested expressions as it does for all other `Subexpressions`
 - Fixed quantification of codepoint lists with more than one entry (`\u{62 63 64}+`)
-  * quantifiers apply only to the last entry, so this token is now split up if quantified
+  - quantifiers apply only to the last entry, so this token is now split up if quantified
 
 ### [1.4.0] - 2019-04-02 - [Janosch Müller](mailto:janosch84@gmail.com)
 
@@ -218,7 +218,7 @@
 ### Fixed
 
 - Thanks to [Akira Matsuda](https://github.com/amatsuda)
-  * eliminated warning "assigned but unused variable - testEof"
+  - eliminated warning "assigned but unused variable - testEof"
 
 ## [1.2.0] - 2018-09-28 - [Janosch Müller](mailto:janosch84@gmail.com)
 
@@ -257,26 +257,26 @@ This release includes several breaking changes, mostly to character sets, #map a
 ### Changed
 
 - Changed handling of sets (a.k.a. character classes or "bracket expressions")
-  * see PR [#55](https://github.com/ammar/regexp_parser/pull/55) / issue [#47](https://github.com/ammar/regexp_parser/issues/47) for details
-  * sets are now parsed to expression trees like other nestable expressions
-  * `#scan` now emits the same tokens as outside sets (no longer `:set, :member`)
-  * `CharacterSet#members` has been removed
-  * new `Range` and `Intersection` classes represent corresponding syntax features
-  * a new `PosixClass` expression class represents e.g. `[[:ascii:]]`
-    * `PosixClass` instances behave like `Property` ones, e.g. support `#negative?`
-    * `#scan` emits `:(non)posixclass, :<type>` instead of `:set, :char_(non)<type>`
+  - see PR [#55](https://github.com/ammar/regexp_parser/pull/55) / issue [#47](https://github.com/ammar/regexp_parser/issues/47) for details
+  - sets are now parsed to expression trees like other nestable expressions
+  - `#scan` now emits the same tokens as outside sets (no longer `:set, :member`)
+  - `CharacterSet#members` has been removed
+  - new `Range` and `Intersection` classes represent corresponding syntax features
+  - a new `PosixClass` expression class represents e.g. `[[:ascii:]]`
+    - `PosixClass` instances behave like `Property` ones, e.g. support `#negative?`
+    - `#scan` emits `:(non)posixclass, :<type>` instead of `:set, :char_(non)<type>`
 - Changed `Subexpression#map` to act like regular `Enumerable#map`
-  * the old behavior is available as `Subexpression#flat_map`
-  * e.g. `parse(/[a]/).map(&:to_s) == ["[a]"]`; used to be `["[a]", "a"]`
+  - the old behavior is available as `Subexpression#flat_map`
+  - e.g. `parse(/[a]/).map(&:to_s) == ["[a]"]`; used to be `["[a]", "a"]`
 - Changed expression emissions for some escape sequences
-  * `EscapeSequence::Codepoint`, `CodepointList`, `Hex` and `Octal` are now all used
-  * they already existed, but were all parsed as `EscapeSequence::Literal`
-  * e.g. `\x97` is now `EscapeSequence::Hex` instead of `EscapeSequence::Literal`
+  - `EscapeSequence::Codepoint`, `CodepointList`, `Hex` and `Octal` are now all used
+  - they already existed, but were all parsed as `EscapeSequence::Literal`
+  - e.g. `\x97` is now `EscapeSequence::Hex` instead of `EscapeSequence::Literal`
 - Changed naming of many property tokens (emitted for `\p{...}`)
-  * if you work with these tokens, see PR [#56](https://github.com/ammar/regexp_parser/pull/56) for details
-  * e.g. `:punct_dash` is now `:dash_punctuation`
+  - if you work with these tokens, see PR [#56](https://github.com/ammar/regexp_parser/pull/56) for details
+  - e.g. `:punct_dash` is now `:dash_punctuation`
 - Changed `(?m)` and the likes to emit as `:options_switch` token (@4ade4d1)
-  * allows differentiating from group-local `:options`, e.g. `(?m:.)`
+  - allows differentiating from group-local `:options`, e.g. `(?m:.)`
 - Changed name of `Backreference::..NestLevel` to `..RecursionLevel` (@4184339)
 - Changed `Backreference::Number#number` from `String` to `Integer` (@40a2231)
 
@@ -301,14 +301,14 @@ This release includes several breaking changes, mostly to character sets, #map a
 ### Changed
 
 - Changed handling of Ruby versions (PR [#53](https://github.com/ammar/regexp_parser/pull/53))
-  * New Ruby versions are now supported by default
-  * Some deep-lying APIs have changed, which should not affect most users:
-    * `Regexp::Syntax::VERSIONS` is gone
-    * Syntax version names have changed from `Regexp::Syntax::Ruby::Vnnn`
+  - New Ruby versions are now supported by default
+  - Some deep-lying APIs have changed, which should not affect most users:
+    - `Regexp::Syntax::VERSIONS` is gone
+    - Syntax version names have changed from `Regexp::Syntax::Ruby::Vnnn`
       to `Regexp::Syntax::Vn_n_n`
-    * Syntax version classes for Ruby versions without regex feature changes
+    - Syntax version classes for Ruby versions without regex feature changes
       are no longer predefined and are now only created on demand / lazily
-    * `Regexp::Syntax::supported?` returns true for any argument >= 1.8.6
+    - `Regexp::Syntax::supported?` returns true for any argument >= 1.8.6
 
 ### Fixed
 
@@ -370,15 +370,15 @@ This release includes several breaking changes, mostly to character sets, #map a
 ## [0.4.5] - 2017-09-17 - [Ammar Ali](mailto:ammarabuali@gmail.com)
 
 - Thanks to [Janosch Müller](https://github.com/janosch-x):
-  * Support ruby 2.2.7 (PR #42)
+  - Support ruby 2.2.7 (PR #42)
 - Added ruby version files for 2.2.8, 2.3.5, and 2.4.2
 
 ## [0.4.4] - 2017-07-10 - [Ammar Ali](mailto:ammarabuali@gmail.com)
 
 - Thanks to [Janosch Müller](https://github.com/janosch-x):
-  * Add support for new absence operator (PR #33)
+  - Add support for new absence operator (PR #33)
 - Thanks to [Bartek Bułat](https://github.com/barthez):
-  * Add support for Ruby 2.3.4 version (PR #40)
+  - Add support for Ruby 2.3.4 version (PR #40)
 
 ## [0.4.3] - 2017-03-24 - [Ammar Ali](mailto:ammarabuali@gmail.com)
 
@@ -387,8 +387,8 @@ This release includes several breaking changes, mostly to character sets, #map a
 ## [0.4.2] - 2017-01-10 - [Ammar Ali](mailto:ammarabuali@gmail.com)
 
 - Thanks to [Janosch Müller](https://github.com/janosch-x):
-  * Support ruby 2.4 (PR #30)
-  * Improve codepoint handling (PR #27)
+  - Support ruby 2.4 (PR #30)
+  - Improve codepoint handling (PR #27)
 
 ## [0.4.1] - 2016-11-22 - [Ammar Ali](mailto:ammarabuali@gmail.com)
 
@@ -402,28 +402,28 @@ This release includes several breaking changes, mostly to character sets, #map a
 ## [0.3.6] - 2016-06-08 - [Ammar Ali](mailto:ammarabuali@gmail.com)
 
 - Thanks to [John Backus](https://github.com/backus):
-  * Remove warnings (PR #26)
+  - Remove warnings (PR #26)
 
 ## [0.3.5] - 2016-05-30 - [Ammar Ali](mailto:ammarabuali@gmail.com)
 
 - Thanks to [John Backus](https://github.com/backus):
-  * Fix parsing of /\xFF/n (hex:escape) (PR #24)
+  - Fix parsing of /\xFF/n (hex:escape) (PR #24)
 
 ## [0.3.4] - 2016-05-25 - [Ammar Ali](mailto:ammarabuali@gmail.com)
 
 - Thanks to [John Backus](https://github.com/backus):
-  * Fix warnings (PR #19)
+  - Fix warnings (PR #19)
 - Thanks to [Dana Scheider](https://github.com/danascheider):
-  * Correct error in README (PR #20)
+  - Correct error in README (PR #20)
 - Fixed mistyped \h and \H character types (issue #21)
 - Added ancestry syntax files for latest rubies (issue #22)
 
 ## [0.3.3] - 2016-04-26 - [Ammar Ali](mailto:ammarabuali@gmail.com)
 
 - Thanks to [John Backus](https://github.com/backus):
-  * Fixed scanning of zero length comments (PR #12)
-  * Fixed missing escape:codepoint_list syntax token (PR #14)
-  * Fixed to_s for modified interval quantifiers (PR #17)
+  - Fixed scanning of zero length comments (PR #12)
+  - Fixed missing escape:codepoint_list syntax token (PR #14)
+  - Fixed to_s for modified interval quantifiers (PR #17)
 - Added a note about MRI implementation quirks to Scanner section
 
 ## [0.3.2] - 2016-01-01 - [Ammar Ali](mailto:ammarabuali@gmail.com)

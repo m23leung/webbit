@@ -83,7 +83,6 @@ html_fragment.to_s # => "<a></a>"
 Where `PermitScrubber` picks out tags and attributes to permit in sanitization,
 `Rails::Html::TargetScrubber` targets them for removal.
 
-
 ```ruby
 scrubber = Rails::Html::TargetScrubber.new
 scrubber.tags = ['img']
@@ -124,9 +123,11 @@ Using the `CommentScrubber` from above, you can use this in a Rails view like so
 ## Read more
 
 Loofah is what underlies the sanitizers and scrubbers of rails-html-sanitizer.
+
 - [Loofah and Loofah Scrubbers](https://github.com/flavorjones/loofah)
 
 The `node` argument passed to some methods in a custom scrubber is an instance of `Nokogiri::XML::Node`.
+
 - [`Nokogiri::XML::Node`](https://nokogiri.org/rdoc/Nokogiri/XML/Node.html)
 - [Nokogiri](http://nokogiri.org)
 
@@ -137,4 +138,5 @@ Rails Html Sanitizers is work of many contributors. You're encouraged to submit 
 See [CONTRIBUTING](CONTRIBUTING.md).
 
 ## License
+
 Rails Html Sanitizers is released under the [MIT License](MIT-LICENSE).

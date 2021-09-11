@@ -1,5 +1,4 @@
-Contributing to Jbuilder
-=====================
+# Contributing to Jbuilder
 
 [![Build Status](https://api.travis-ci.org/rails/jbuilder.svg?branch=master)][travis]
 [![Gem Version](https://badge.fury.io/rb/jbuilder.svg)][gem]

@@ -1,15 +1,15 @@
 body {
-    @apply font-sans text-base leading-normal;
+  @apply font-sans text-base leading-normal;
 }
 
 a {
-    @apply text-purple-600;
+  @apply text-purple-600;
 }
 
 a:active {
-    color: inherit;
+  color: inherit;
 }
 
 .heading {
-    @apply font-sans font-medium text-gray-800;
+  @apply font-sans font-medium text-gray-800;
 }

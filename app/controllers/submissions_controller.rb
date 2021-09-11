@@ -1,15 +1,20 @@
 class SubmissionsController < ApplicationController
-  before_action :set_submission, only: %i[ show edit update destroy ]
+  before_action :set_submission, only: %i[ show edit update destroy upvote downvote ]
   before_action :authenticate_user!, except: [:show, :index]
 
   # GET /submissions or /submissions.json
   def index
-    @submissions = Submission.all
+    if user_signed_in?
+      @submissions = current_user.subscribed_submissions
+    else
+      @submissions = Submission.all
+    end
   end
 
   # GET /submissions/1 or /submissions/1.json
   def show
     @comment = Comment.new
+    @community = @submission.community
   end
 
   # GET /submissions/new
@@ -57,6 +62,41 @@ class SubmissionsController < ApplicationController
       format.html { redirect_to submissions_url, notice: "Submission was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def upvote
+    respond_to do |format|
+      unless current_user.voted_for? @submission
+        format.html { redirect_back(fallback_location: root_path) }
+        format.json { head :no_content }
+        format.js { flash.now[:notice] = "Successfully upvoted #{@submission.class.name}" }
+        @submission.upvote_by current_user
+      else
+        #format.html { redirect_back(fallback_location: root_path) }
+        #format.json { head :no_content }
+        format.js { flash.now[:notice] = "You already voted for #{@submission.class.name}" }
+      end
+    end
+  end
+
+  def downvote
+    respond_to do |format|
+      unless current_user.voted_for? @submission
+        format.html { redirect_back(fallback_location: root_path) }
+        format.json { head :no_content }
+        format.js { flash.now[:notice] = "Successfully downvoted #{@submission.class.name}" }
+        @submission.downvote_by current_user
+      else
+        #format.html { redirect_back(fallback_location: root_path) }
+        #format.json { head :no_content }
+        format.js { flash.now[:notice] = "You already voted for #{@submission.class.name}" }
+      end
+    end
+  end
+
+  def unsubscribe
+    user = User.find_by_unsubscribe_hash(params[:unsubscribe_hash])
+    user.update_attribute(:comment_subscription, false)
   end
 
   private

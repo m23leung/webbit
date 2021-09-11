@@ -4,39 +4,38 @@
 
 A Ruby gem for tokenizing, parsing, and transforming regular expressions.
 
-* Multilayered
-  * A scanner/tokenizer based on [Ragel](http://www.colm.net/open-source/ragel/)
-  * A lexer that produces a "stream" of token objects.
-  * A parser that produces a "tree" of Expression objects (OO API)
-* Runs on Ruby 2.x, 3.x and JRuby runtimes
-* Recognizes Ruby 1.8, 1.9, 2.x and 3.x regular expressions [See Supported Syntax](#supported-syntax)
-
+- Multilayered
+  - A scanner/tokenizer based on [Ragel](http://www.colm.net/open-source/ragel/)
+  - A lexer that produces a "stream" of token objects.
+  - A parser that produces a "tree" of Expression objects (OO API)
+- Runs on Ruby 2.x, 3.x and JRuby runtimes
+- Recognizes Ruby 1.8, 1.9, 2.x and 3.x regular expressions [See Supported Syntax](#supported-syntax)
 
 _For examples of regexp_parser in use, see [Example Projects](#example-projects)._
 
-
 ---
+
 ## Requirements
 
-* Ruby >= 2.0
-* Ragel >= 6.0, but only if you want to build the gem or work on the scanner.
-
+- Ruby >= 2.0
+- Ragel >= 6.0, but only if you want to build the gem or work on the scanner.
 
 ---
+
 ## Install
 
 Install the gem with:
 
-  `gem install regexp_parser`
+`gem install regexp_parser`
 
 Or, add it to your project's `Gemfile`:
 
-```gem 'regexp_parser', '~> X.Y.Z'```
+`gem 'regexp_parser', '~> X.Y.Z'`
 
 See rubygems for the the [latest version number](https://rubygems.org/gems/regexp_parser)
 
-
 ---
+
 ## Usage
 
 The three main modules are **Scanner**, **Lexer**, and **Parser**. Each of them
@@ -60,16 +59,17 @@ Regexp::Parser.parse(regexp)
 All three methods accept a block as the last argument, which, if given, gets
 called with the results as follows:
 
-* **Scanner**: the block gets passed the results as they are scanned. See the
+- **Scanner**: the block gets passed the results as they are scanned. See the
   example in the next section for details.
 
-* **Lexer**: after completion, the block gets passed the tokens one by one.
+- **Lexer**: after completion, the block gets passed the tokens one by one.
   _The result of the block is returned._
 
-* **Parser**: after completion, the block gets passed the root expression.
+- **Parser**: after completion, the block gets passed the root expression.
   _The result of the block is returned._
 
 All three methods accept either a `Regexp` or `String` (containing the pattern)
+
 - if a String is passed, `options` can be supplied:
 
 ```ruby
@@ -82,16 +82,18 @@ Regexp::Parser.parse(
 ```
 
 ---
+
 ## Components
 
 ### Scanner
+
 A Ragel-generated scanner that recognizes the cumulative syntax of all
 supported syntax versions. It breaks a given expression's text into the
 smallest parts, and identifies their type, token, text, and start/end
 offsets within the pattern.
 
-
 #### Example
+
 The following scans the given pattern and prints out the type, token, text and
 start/end offsets for each token found.
 
@@ -125,35 +127,38 @@ Regexp::Scanner.scan( /(cat?([bhm]at)){3,5}/ ).map {|token| token[2]}
 #=> ["(", "cat", "?", "(", "[", "b", "h", "m", "]", "at", ")", ")", "{3,5}"]
 ```
 
-
 #### Notes
-  * The scanner performs basic syntax error checking, like detecting missing
-    balancing punctuation and premature end of pattern. Flavor validity checks
-    are performed in the lexer, which uses a syntax object.
 
-  * If the input is a Ruby **Regexp** object, the scanner calls #source on it to
-    get its string representation. #source does not include the options of
-    the expression (m, i, and x). To include the options in the scan, #to_s
-    should be called on the **Regexp** before passing it to the scanner or the
-    lexer. For the parser, however, this is not necessary. It automatically
-    exposes the options of a passed **Regexp** in the returned root expression.
+- The scanner performs basic syntax error checking, like detecting missing
+  balancing punctuation and premature end of pattern. Flavor validity checks
+  are performed in the lexer, which uses a syntax object.
 
-  * To keep the scanner simple(r) and fairly reusable for other purposes, it
-    does not perform lexical analysis on the tokens, sticking to the task
-    of identifying the smallest possible tokens and leaving lexical analysis
-    to the lexer.
+- If the input is a Ruby **Regexp** object, the scanner calls #source on it to
+  get its string representation. #source does not include the options of
+  the expression (m, i, and x). To include the options in the scan, #to_s
+  should be called on the **Regexp** before passing it to the scanner or the
+  lexer. For the parser, however, this is not necessary. It automatically
+  exposes the options of a passed **Regexp** in the returned root expression.
 
-  * The MRI implementation may accept expressions that either conflict with
-    the documentation or are undocumented, like `{}` and `]` _(unescaped)_.
-    The scanner will try to support as many of these cases as possible.
+- To keep the scanner simple(r) and fairly reusable for other purposes, it
+  does not perform lexical analysis on the tokens, sticking to the task
+  of identifying the smallest possible tokens and leaving lexical analysis
+  to the lexer.
+
+- The MRI implementation may accept expressions that either conflict with
+  the documentation or are undocumented, like `{}` and `]` _(unescaped)_.
+  The scanner will try to support as many of these cases as possible.
 
 ---
+
 ### Syntax
+
 Defines the supported tokens for a specific engine implementation (aka a
 flavor). Syntax classes act as lookup tables, and are layered to create
 flavor variations. Syntax only comes into play in the lexer.
 
 #### Example
+
 The following instantiates syntax objects for Ruby 2.0, 1.9, 1.8, and
 checks a few of their implementation features.
 
@@ -179,17 +184,18 @@ ruby_18.implements? :quantifier,  :zero_or_one_possessive  # => false
 ruby_18.implements? :conditional, :condition               # => false
 ```
 
-
 #### Notes
-  * Variations on a token, for example a named group with angle brackets (< and >)
-    vs one with a pair of single quotes, are specified with an underscore followed
-    by two characters appended to the base token. In the previous named group example,
-    the tokens would be :named_ab (angle brackets) and :named_sq (single quotes).
-    These variations are normalized by the syntax to :named.
 
+- Variations on a token, for example a named group with angle brackets (< and >)
+  vs one with a pair of single quotes, are specified with an underscore followed
+  by two characters appended to the base token. In the previous named group example,
+  the tokens would be :named_ab (angle brackets) and :named_sq (single quotes).
+  These variations are normalized by the syntax to :named.
 
 ---
+
 ### Lexer
+
 Sits on top of the scanner and performs lexical analysis on the tokens that
 it emits. Among its tasks are; breaking quantified literal runs, collecting the
 emitted token attributes into Token objects, calculating their nesting depth,
@@ -199,8 +205,8 @@ the given syntax version.
 See the [Token Objects](https://github.com/ammar/regexp_parser/wiki/Token-Objects)
 wiki page for more information on Token objects.
 
-
 #### Example
+
 The following example lexes the given pattern, checks it against the Ruby 1.9
 syntax, and prints the token objects' text indented to their level.
 
@@ -238,21 +244,22 @@ Regexp::Lexer.scan( /(cat?([b]at)){3,5}/ ).map {|token| token.text}
 ```
 
 #### Notes
-  * The syntax argument is optional. It defaults to the version of the Ruby
-    interpreter in use, as returned by RUBY_VERSION.
 
-  * The lexer normalizes some tokens, as noted in the Syntax section above.
+- The syntax argument is optional. It defaults to the version of the Ruby
+  interpreter in use, as returned by RUBY_VERSION.
 
+- The lexer normalizes some tokens, as noted in the Syntax section above.
 
 ---
+
 ### Parser
+
 Sits on top of the lexer and transforms the "stream" of Token objects emitted
 by it into a tree of Expression objects represented by an instance of the
 Expression::Root class.
 
 See the [Expression Objects](https://github.com/ammar/regexp_parser/wiki/Expression-Objects)
 wiki page for attributes and methods.
-
 
 #### Example
 
@@ -281,9 +288,9 @@ end
 # exit: group `(?<name>[0-9]+)`
 ```
 
-Another example, using each_expression and strfregexp to print the object tree.
-_See the traverse.rb and strfregexp.rb files under `lib/regexp_parser/expression/methods`
-for more information on these methods._
+Another example, using each*expression and strfregexp to print the object tree.
+\_See the traverse.rb and strfregexp.rb files under `lib/regexp_parser/expression/methods`
+for more information on these methods.*
 
 ```ruby
 include_root  = true
@@ -308,68 +315,66 @@ end
 _Note: quantifiers do not appear in the output because they are members of the
 Expression class. See the next section for details._
 
-
 ---
 
-
 ## Supported Syntax
+
 The three modules support all the regular expression syntax features of Ruby 1.8,
 1.9, 2.x and 3.x:
 
 _Note that not all of these are available in all versions of Ruby_
 
-
-| Syntax Feature                        | Examples                                                | &#x22ef; |
-| ------------------------------------- | ------------------------------------------------------- |:--------:|
-| **Alternation**                       | `a\|b\|c`                                               | &#x2713; |
-| **Anchors**                           | `\A`, `^`, `\b`                                         | &#x2713; |
-| **Character Classes**                 | `[abc]`, `[^\\]`, `[a-d&&aeiou]`, `[a=e=b]`             | &#x2713; |
-| **Character Types**                   | `\d`, `\H`, `\s`                                        | &#x2713; |
-| **Cluster Types**                     | `\R`, `\X`                                              | &#x2713; |
-| **Conditional Exps.**                 | `(?(cond)yes-subexp)`, `(?(cond)yes-subexp\|no-subexp)` | &#x2713; |
-| **Escape Sequences**                  | `\t`, `\\+`, `\?`                                       | &#x2713; |
-| **Free Space**                        | whitespace and `# Comments` _(x modifier)_              | &#x2713; |
-| **Grouped Exps.**                     |                                                         | &#x22f1; |
-| &emsp;&nbsp;_**Assertions**_          |                                                         | &#x22f1; |
-| &emsp;&emsp;_Lookahead_               | `(?=abc)`                                               | &#x2713; |
-| &emsp;&emsp;_Negative Lookahead_      | `(?!abc)`                                               | &#x2713; |
-| &emsp;&emsp;_Lookbehind_              | `(?<=abc)`                                              | &#x2713; |
-| &emsp;&emsp;_Negative Lookbehind_     | `(?<!abc)`                                              | &#x2713; |
-| &emsp;&nbsp;_**Atomic**_              | `(?>abc)`                                               | &#x2713; |
-| &emsp;&nbsp;_**Absence**_             | `(?~abc)`                                               | &#x2713; |
-| &emsp;&nbsp;_**Back-references**_     |                                                         | &#x22f1; |
-| &emsp;&emsp;_Named_                   | `\k<name>`                                              | &#x2713; |
-| &emsp;&emsp;_Nest Level_              | `\k<n-1>`                                               | &#x2713; |
-| &emsp;&emsp;_Numbered_                | `\k<1>`                                                 | &#x2713; |
-| &emsp;&emsp;_Relative_                | `\k<-2>`                                                | &#x2713; |
-| &emsp;&emsp;_Traditional_             | `\1` thru `\9`                                          | &#x2713; |
-| &emsp;&nbsp;_**Capturing**_           | `(abc)`                                                 | &#x2713; |
-| &emsp;&nbsp;_**Comments**_            | `(?# comment text)`                                     | &#x2713; |
-| &emsp;&nbsp;_**Named**_               | `(?<name>abc)`, `(?'name'abc)`                          | &#x2713; |
-| &emsp;&nbsp;_**Options**_             | `(?mi-x:abc)`, `(?a:\s\w+)`, `(?i)`                     | &#x2713; |
-| &emsp;&nbsp;_**Passive**_             | `(?:abc)`                                               | &#x2713; |
-| &emsp;&nbsp;_**Subexp. Calls**_       | `\g<name>`, `\g<1>`                                     | &#x2713; |
-| **Keep**                              | `\K`, `(ab\Kc\|d\Ke)f`                                  | &#x2713; |
-| **Literals** _(utf-8)_                | `Ruby`, `ルビー`, `روبي`                                | &#x2713; |
-| **POSIX Classes**                     | `[:alpha:]`, `[:^digit:]`                               | &#x2713; |
-| **Quantifiers**                       |                                                         | &#x22f1; |
-| &emsp;&nbsp;_**Greedy**_              | `?`, `*`, `+`, `{m,M}`                                  | &#x2713; |
-| &emsp;&nbsp;_**Reluctant** (Lazy)_    | `??`, `*?`, `+?`, `{m,M}?`                              | &#x2713; |
-| &emsp;&nbsp;_**Possessive**_          | `?+`, `*+`, `++`, `{m,M}+`                              | &#x2713; |
-| **String Escapes**                    |                                                         | &#x22f1; |
-| &emsp;&nbsp;_**Control**_             | `\C-C`, `\cD`                                           | &#x2713; |
-| &emsp;&nbsp;_**Hex**_                 | `\x20`, `\x{701230}`                                    | &#x2713; |
-| &emsp;&nbsp;_**Meta**_                | `\M-c`, `\M-\C-C`, `\M-\cC`, `\C-\M-C`, `\c\M-C`        | &#x2713; |
-| &emsp;&nbsp;_**Octal**_               | `\0`, `\01`, `\012`                                     | &#x2713; |
-| &emsp;&nbsp;_**Unicode**_             | `\uHHHH`, `\u{H+ H+}`                                   | &#x2713; |
-| **Unicode Properties**                | _<sub>([Unicode 11.0.0](http://www.unicode.org/versions/Unicode11.0.0/))</sub>_ | &#x22f1; |
-| &emsp;&nbsp;_**Age**_                 | `\p{Age=5.2}`, `\P{age=7.0}`, `\p{^age=8.0}`            | &#x2713; |
-| &emsp;&nbsp;_**Blocks**_              | `\p{InArmenian}`, `\P{InKhmer}`, `\p{^InThai}`          | &#x2713; |
-| &emsp;&nbsp;_**Classes**_             | `\p{Alpha}`, `\P{Space}`, `\p{^Alnum}`                  | &#x2713; |
-| &emsp;&nbsp;_**Derived**_             | `\p{Math}`, `\P{Lowercase}`, `\p{^Cased}`               | &#x2713; |
-| &emsp;&nbsp;_**General Categories**_  | `\p{Lu}`, `\P{Cs}`, `\p{^sc}`                           | &#x2713; |
-| &emsp;&nbsp;_**Scripts**_             | `\p{Arabic}`, `\P{Hiragana}`, `\p{^Greek}`              | &#x2713; |
-| &emsp;&nbsp;_**Simple**_              | `\p{Dash}`, `\p{Extender}`, `\p{^Hyphen}`               | &#x2713; |
+| Syntax Feature                       | Examples                                                                        | &#x22ef; |
+| ------------------------------------ | ------------------------------------------------------------------------------- | :------: |
+| **Alternation**                      | `a\|b\|c`                                                                       | &#x2713; |
+| **Anchors**                          | `\A`, `^`, `\b`                                                                 | &#x2713; |
+| **Character Classes**                | `[abc]`, `[^\\]`, `[a-d&&aeiou]`, `[a=e=b]`                                     | &#x2713; |
+| **Character Types**                  | `\d`, `\H`, `\s`                                                                | &#x2713; |
+| **Cluster Types**                    | `\R`, `\X`                                                                      | &#x2713; |
+| **Conditional Exps.**                | `(?(cond)yes-subexp)`, `(?(cond)yes-subexp\|no-subexp)`                         | &#x2713; |
+| **Escape Sequences**                 | `\t`, `\\+`, `\?`                                                               | &#x2713; |
+| **Free Space**                       | whitespace and `# Comments` _(x modifier)_                                      | &#x2713; |
+| **Grouped Exps.**                    |                                                                                 | &#x22f1; |
+| &emsp;&nbsp;_**Assertions**_         |                                                                                 | &#x22f1; |
+| &emsp;&emsp;_Lookahead_              | `(?=abc)`                                                                       | &#x2713; |
+| &emsp;&emsp;_Negative Lookahead_     | `(?!abc)`                                                                       | &#x2713; |
+| &emsp;&emsp;_Lookbehind_             | `(?<=abc)`                                                                      | &#x2713; |
+| &emsp;&emsp;_Negative Lookbehind_    | `(?<!abc)`                                                                      | &#x2713; |
+| &emsp;&nbsp;_**Atomic**_             | `(?>abc)`                                                                       | &#x2713; |
+| &emsp;&nbsp;_**Absence**_            | `(?~abc)`                                                                       | &#x2713; |
+| &emsp;&nbsp;_**Back-references**_    |                                                                                 | &#x22f1; |
+| &emsp;&emsp;_Named_                  | `\k<name>`                                                                      | &#x2713; |
+| &emsp;&emsp;_Nest Level_             | `\k<n-1>`                                                                       | &#x2713; |
+| &emsp;&emsp;_Numbered_               | `\k<1>`                                                                         | &#x2713; |
+| &emsp;&emsp;_Relative_               | `\k<-2>`                                                                        | &#x2713; |
+| &emsp;&emsp;_Traditional_            | `\1` thru `\9`                                                                  | &#x2713; |
+| &emsp;&nbsp;_**Capturing**_          | `(abc)`                                                                         | &#x2713; |
+| &emsp;&nbsp;_**Comments**_           | `(?# comment text)`                                                             | &#x2713; |
+| &emsp;&nbsp;_**Named**_              | `(?<name>abc)`, `(?'name'abc)`                                                  | &#x2713; |
+| &emsp;&nbsp;_**Options**_            | `(?mi-x:abc)`, `(?a:\s\w+)`, `(?i)`                                             | &#x2713; |
+| &emsp;&nbsp;_**Passive**_            | `(?:abc)`                                                                       | &#x2713; |
+| &emsp;&nbsp;_**Subexp. Calls**_      | `\g<name>`, `\g<1>`                                                             | &#x2713; |
+| **Keep**                             | `\K`, `(ab\Kc\|d\Ke)f`                                                          | &#x2713; |
+| **Literals** _(utf-8)_               | `Ruby`, `ルビー`, `روبي`                                                        | &#x2713; |
+| **POSIX Classes**                    | `[:alpha:]`, `[:^digit:]`                                                       | &#x2713; |
+| **Quantifiers**                      |                                                                                 | &#x22f1; |
+| &emsp;&nbsp;_**Greedy**_             | `?`, `*`, `+`, `{m,M}`                                                          | &#x2713; |
+| &emsp;&nbsp;_**Reluctant** (Lazy)_   | `??`, `*?`, `+?`, `{m,M}?`                                                      | &#x2713; |
+| &emsp;&nbsp;_**Possessive**_         | `?+`, `*+`, `++`, `{m,M}+`                                                      | &#x2713; |
+| **String Escapes**                   |                                                                                 | &#x22f1; |
+| &emsp;&nbsp;_**Control**_            | `\C-C`, `\cD`                                                                   | &#x2713; |
+| &emsp;&nbsp;_**Hex**_                | `\x20`, `\x{701230}`                                                            | &#x2713; |
+| &emsp;&nbsp;_**Meta**_               | `\M-c`, `\M-\C-C`, `\M-\cC`, `\C-\M-C`, `\c\M-C`                                | &#x2713; |
+| &emsp;&nbsp;_**Octal**_              | `\0`, `\01`, `\012`                                                             | &#x2713; |
+| &emsp;&nbsp;_**Unicode**_            | `\uHHHH`, `\u{H+ H+}`                                                           | &#x2713; |
+| **Unicode Properties**               | _<sub>([Unicode 11.0.0](http://www.unicode.org/versions/Unicode11.0.0/))</sub>_ | &#x22f1; |
+| &emsp;&nbsp;_**Age**_                | `\p{Age=5.2}`, `\P{age=7.0}`, `\p{^age=8.0}`                                    | &#x2713; |
+| &emsp;&nbsp;_**Blocks**_             | `\p{InArmenian}`, `\P{InKhmer}`, `\p{^InThai}`                                  | &#x2713; |
+| &emsp;&nbsp;_**Classes**_            | `\p{Alpha}`, `\P{Space}`, `\p{^Alnum}`                                          | &#x2713; |
+| &emsp;&nbsp;_**Derived**_            | `\p{Math}`, `\P{Lowercase}`, `\p{^Cased}`                                       | &#x2713; |
+| &emsp;&nbsp;_**General Categories**_ | `\p{Lu}`, `\P{Cs}`, `\p{^sc}`                                                   | &#x2713; |
+| &emsp;&nbsp;_**Scripts**_            | `\p{Arabic}`, `\P{Hiragana}`, `\p{^Greek}`                                      | &#x2713; |
+| &emsp;&nbsp;_**Simple**_             | `\p{Dash}`, `\p{Extender}`, `\p{^Hyphen}`                                       | &#x2713; |
 
 ##### Inapplicable Features
 
@@ -381,17 +386,16 @@ These are not seen by the scanner.
 The following features are not currently enabled for Ruby by its regular
 expressions library (Onigmo). They are not supported by the scanner.
 
-  - **Quotes**: `\Q...\E` _[[See]](https://github.com/k-takata/Onigmo/blob/7911409/doc/RE#L499)_
-  - **Capture History**: `(?@...)`, `(?@<name>...)` _[[See]](https://github.com/k-takata/Onigmo/blob/7911409/doc/RE#L550)_
-
+- **Quotes**: `\Q...\E` _[[See]](https://github.com/k-takata/Onigmo/blob/7911409/doc/RE#L499)_
+- **Capture History**: `(?@...)`, `(?@<name>...)` _[[See]](https://github.com/k-takata/Onigmo/blob/7911409/doc/RE#L550)_
 
 See something missing? Please submit an [issue](https://github.com/ammar/regexp_parser/issues)
 
 _**Note**: Attempting to process expressions with unsupported syntax features can raise an error,
 or incorrectly return tokens/objects as literals._
 
-
 ## Testing
+
 To run the tests simply run rake from the root directory, as 'test' is the default task.
 
 It generates the scanner's code from the Ragel source files and runs all the tests, thus it requires Ragel to be installed.
@@ -415,26 +419,27 @@ rake ragel:rb && bin/test spec/scanner/properties_spec.rb
 ```
 
 ## Building
+
 Building the scanner and the gem requires [Ragel](http://www.colm.net/open-source/ragel/) to be
 installed. The build tasks will automatically invoke the 'ragel:rb' task to generate the
 Ruby scanner code.
 
-
 The project uses the standard rubygems package tasks, so:
 
-
 To build the gem, run:
+
 ```
 rake build
 ```
 
 To install the gem from the cloned project, run:
+
 ```
 rake install
 ```
 
-
 ## Example Projects
+
 Projects using regexp_parser.
 
 - [capybara](https://github.com/teamcapybara/capybara) is an integration testing tool that uses regexp_parser to convert Regexps to css/xpath selectors.
@@ -449,31 +454,32 @@ Projects using regexp_parser.
 
 - [twitter-cldr-rb](https://github.com/twitter/twitter-cldr-rb) is a localization helper that uses regexp_parser to generate examples of postal codes.
 
-
 ## References
+
 Documentation and books used while working on this project.
 
-
 #### Ruby Flavors
-* Oniguruma Regular Expressions (Ruby 1.9.x) [link](https://github.com/kkos/oniguruma/blob/master/doc/RE)
-* Onigmo Regular Expressions (Ruby >= 2.0) [link](https://github.com/k-takata/Onigmo/blob/master/doc/RE)
 
+- Oniguruma Regular Expressions (Ruby 1.9.x) [link](https://github.com/kkos/oniguruma/blob/master/doc/RE)
+- Onigmo Regular Expressions (Ruby >= 2.0) [link](https://github.com/k-takata/Onigmo/blob/master/doc/RE)
 
 #### Regular Expressions
-* Mastering Regular Expressions, By Jeffrey E.F. Friedl (2nd Edition) [book](http://oreilly.com/catalog/9781565922570/)
-* Regular Expression Flavor Comparison [link](http://www.regular-expressions.info/refflavors.html)
-* Enumerating the strings of regular languages [link](http://www.cs.dartmouth.edu/~doug/nfa.ps.gz)
-* Stack Overflow Regular Expressions FAQ [link](http://stackoverflow.com/questions/22937618/reference-what-does-this-regex-mean/22944075#22944075)
 
+- Mastering Regular Expressions, By Jeffrey E.F. Friedl (2nd Edition) [book](http://oreilly.com/catalog/9781565922570/)
+- Regular Expression Flavor Comparison [link](http://www.regular-expressions.info/refflavors.html)
+- Enumerating the strings of regular languages [link](http://www.cs.dartmouth.edu/~doug/nfa.ps.gz)
+- Stack Overflow Regular Expressions FAQ [link](http://stackoverflow.com/questions/22937618/reference-what-does-this-regex-mean/22944075#22944075)
 
 #### Unicode
-* Unicode Explained, By Jukka K. Korpela. [book](http://oreilly.com/catalog/9780596101213)
-* Unicode Derived Properties [link](http://www.unicode.org/Public/UNIDATA/DerivedCoreProperties.txt)
-* Unicode Property Aliases [link](http://www.unicode.org/Public/UNIDATA/PropertyAliases.txt)
-* Unicode Regular Expressions [link](http://www.unicode.org/reports/tr18/)
-* Unicode Standard Annex #44 [link](http://www.unicode.org/reports/tr44/)
 
+- Unicode Explained, By Jukka K. Korpela. [book](http://oreilly.com/catalog/9780596101213)
+- Unicode Derived Properties [link](http://www.unicode.org/Public/UNIDATA/DerivedCoreProperties.txt)
+- Unicode Property Aliases [link](http://www.unicode.org/Public/UNIDATA/PropertyAliases.txt)
+- Unicode Regular Expressions [link](http://www.unicode.org/reports/tr18/)
+- Unicode Standard Annex #44 [link](http://www.unicode.org/reports/tr44/)
 
 ---
+
 ##### Copyright
+
 _Copyright (c) 2010-2020 Ammar Ali. See LICENSE file for details._

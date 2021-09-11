@@ -2,12 +2,11 @@ name: Tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
-
   build:
     strategy:
       matrix:
@@ -21,16 +20,15 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
+      - uses: actions/checkout@v2
 
-    - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby-version }}
+      - name: Install dependencies
+        run: bundle install
 
-    - name: Install dependencies
-      run: bundle install
-
-    - name: Run tests
-      run: bundle exec rake
+      - name: Run tests
+        run: bundle exec rake

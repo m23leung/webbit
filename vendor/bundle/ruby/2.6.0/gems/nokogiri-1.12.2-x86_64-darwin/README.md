@@ -11,7 +11,6 @@ Some guiding principles Nokogiri tries to follow:
 - be secure-by-default by treating all documents as **untrusted** by default
 - be a **thin-as-reasonable layer** on top of the underlying parsers, and don't attempt to fix behavioral differences between the parsers
 
-
 ## Features Overview
 
 - DOM Parser for XML, HTML4, and HTML5
@@ -23,7 +22,6 @@ Some guiding principles Nokogiri tries to follow:
 - XSLT transformation
 - "Builder" DSL for XML and HTML documents
 
-
 ## Status
 
 [![Github Actions CI](https://github.com/sparklemotion/nokogiri/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/sparklemotion/nokogiri/actions/workflows/ci.yml)
@@ -33,14 +31,13 @@ Some guiding principles Nokogiri tries to follow:
 [![SemVer compatibility](https://api.dependabot.com/badges/compatibility_score?dependency-name=nokogiri&package-manager=bundler&version-scheme=semver)](https://dependabot.com/compatibility-score/?dependency-name=nokogiri&package-manager=bundler)
 [![Tidelift dependencies](https://tidelift.com/badges/package/rubygems/nokogiri)](https://tidelift.com/subscription/pkg/rubygems-nokogiri?utm_source=rubygems-nokogiri&utm_medium=referral&utm_campaign=readme)
 
-
 ## Support, Getting Help, and Reporting Issues
 
 All official documentation is posted at https://nokogiri.org (the source for which is at https://github.com/sparklemotion/nokogiri.org/, and we welcome contributions).
 
 Consider subscribing to [Tidelift][tidelift] which provides license assurances and timely security notifications for your open source dependencies, including Nokogiri. [Tidelift][tidelift] subscriptions also help the Nokogiri maintainers fund our [automated testing](https://ci.nokogiri.org) which in turn allows us to ship releases, bugfixes, and security updates more often.
 
-  [tidelift]: https://tidelift.com/subscription/pkg/rubygems-nokogiri?utm_source=rubygems-nokogiri&utm_medium=referral&utm_campaign=readme
+[tidelift]: https://tidelift.com/subscription/pkg/rubygems-nokogiri?utm_source=rubygems-nokogiri&utm_medium=referral&utm_campaign=readme
 
 ### Reading
 
@@ -49,7 +46,6 @@ Your first stops for learning more about Nokogiri should be:
 - [API Documentation](https://nokogiri.org/rdoc/index.html)
 - [Tutorials](https://nokogiri.org/tutorials/toc.html)
 - An excellent community-maintained [Cheat Sheet](https://github.com/sparklemotion/nokogiri/wiki/Cheat-sheet)
-
 
 ### Ask For Help
 
@@ -61,20 +57,17 @@ There are a few ways to ask exploratory questions:
 
 Please do not mail the maintainers at their personal addresses.
 
-
 ### Report A Bug
 
 The Nokogiri bug tracker is at https://github.com/sparklemotion/nokogiri/issues
 
 Please use the "Bug Report" or "Installation Difficulties" templates.
 
-
 ### Security and Vulnerability Reporting
 
 Please report vulnerabilities at https://hackerone.com/nokogiri
 
 Full information and description of our security policy is in [`SECURITY.md`](SECURITY.md)
-
 
 ### Semantic Versioning Policy
 
@@ -100,14 +93,12 @@ We bump `Major.Minor.Patch` versions following this guidance:
 - Security updates.
 - Updating packaged libraries for security-related reasons.
 
-
 ## Installation
 
 Requirements:
 
 - Ruby >= 2.5
 - JRuby >= 9.2.0.0
-
 
 ### Native Gems: Faster, more reliable installation
 
@@ -126,13 +117,12 @@ To determine whether your system supports one of these gems, look at the output 
 
 If you're on a supported platform, either `gem install` or `bundle install` should install a native gem without any additional action on your part. This installation should only take a few seconds, and your output should look something like:
 
-``` sh
+```sh
 $ gem install nokogiri
 Fetching nokogiri-1.11.0-x86_64-linux.gem
 Successfully installed nokogiri-1.11.0-x86_64-linux
 1 gem installed
 ```
-
 
 ### Other Installation Options
 
@@ -140,12 +130,11 @@ Because Nokogiri is a C extension, it requires that you have a C compiler toolch
 
 The following may work for you if you have an appropriately-configured system:
 
-``` bash
+```bash
 gem install nokogiri
 ```
 
 If you have any issues, please visit [Installing Nokogiri](https://nokogiri.org/tutorials/installing_nokogiri.html) for more complete instructions and troubleshooting.
-
 
 ## How To Use Nokogiri
 
@@ -180,15 +169,14 @@ doc.search('nav ul.menu li a', '//article//h2').each do |link|
 end
 ```
 
-
 ### Encoding
 
-Strings are always stored as UTF-8 internally.  Methods that return
-text values will always return UTF-8 encoded strings.  Methods that
+Strings are always stored as UTF-8 internally. Methods that return
+text values will always return UTF-8 encoded strings. Methods that
 return a string containing markup (like `to_xml`, `to_html` and
 `inner_html`) will return a string encoded like the source document.
 
-__WARNING__
+**WARNING**
 
 Some documents declare one encoding, but actually use a different
 one. In these cases, which encoding should the parser choose?
@@ -199,13 +187,12 @@ encodings, so detecting encoding with 100% accuracy is not
 possible. `libxml2` does its best, but it can't be right all the time.
 
 If you want Nokogiri to handle the document encoding properly, your
-best bet is to explicitly set the encoding.  Here is an example of
+best bet is to explicitly set the encoding. Here is an example of
 explicitly setting the encoding to EUC-JP on the parser:
 
 ```ruby
   doc = Nokogiri.XML('<foo><bar /></foo>', nil, 'EUC-JP')
 ```
-
 
 ## Technical Overview
 
@@ -218,7 +205,6 @@ As noted above, two guiding principles of the software are:
 
 Notably, despite all parsers being standards-compliant, there are behavioral inconsistencies between the parsers used in the CRuby and JRuby implementations, and Nokogiri does not and should not attempt to remove these inconsistencies. Instead, we surface these differences in the test suite when they are important/semantic; or we intentionally write tests to depend only on the important/semantic bits (omitting whitespace from regex matchers on results, for example).
 
-
 ### CRuby
 
 The Ruby (a.k.a., CRuby, MRI, YARV) implementation is a C extension that depends on libxml2 and libxslt (which in turn depend on zlib and possibly libiconv).
@@ -229,7 +215,6 @@ We provide native gems by pre-compiling libxml2 and libxslt (and potentially zli
 
 See [`LICENSE-DEPENDENCIES.md`](LICENSE-DEPENDENCIES.md) for more information on which dependencies are provided in which native and source gems.
 
-
 ### JRuby
 
 The Java (a.k.a. JRuby) implementation is a Java extension that depends primarily on Xerces and NekoHTML for parsing, though additional dependencies are on `isorelax`, `nekodtd`, `jing`, `serializer`, `xalan-j`, and `xml-apis`.
@@ -238,16 +223,13 @@ These dependencies are provided by pre-compiled jar files packaged in the `java`
 
 See [`LICENSE-DEPENDENCIES.md`](LICENSE-DEPENDENCIES.md) for more information on which dependencies are provided in which native and source gems.
 
-
 ## Contributing
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for an intro guide to developing Nokogiri.
 
-
 ## Code of Conduct
 
 We've adopted the Contributor Covenant code of conduct, which you can read in full in [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
-
 
 ## License
 
@@ -255,11 +237,9 @@ This project is licensed under the terms of the MIT license.
 
 See this license at [`LICENSE.md`](LICENSE.md).
 
-
 ### Dependencies
 
 Some additional libraries may be distributed with your version of Nokogiri. Please see [`LICENSE-DEPENDENCIES.md`](LICENSE-DEPENDENCIES.md) for a discussion of the variations as well as the licenses thereof.
-
 
 ## Authors
 

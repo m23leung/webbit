@@ -85,20 +85,20 @@ blue:
 
 ## Options
 
-key                     | description
-:---------------------- | :----------
-`id`                    | set a ID attribute on the SVG
-`class`                 | set a CSS class attribute on the SVG
-`style`                 | set a CSS style attribute on the SVG
-`data`                  | add data attributes to the SVG (supply as a hash)
-`size`                  | set width and height attributes on the SVG <br/> Can also be set using `height` and/or `width` attributes, which take precedence over `size` <br/> Supplied as "{Width} * {Height}" or "{Number}", so "30px\*45px" becomes `width="30px"` and `height="45px"`, and "50%" becomes `width="50%"` and `height="50%"`
-`title`                 | add a \<title\> node inside the top level of the SVG document
-`desc`                  | add a \<desc\> node inside the top level of the SVG document
-`nocomment`             | remove comment tags from the SVG document
-`preserve_aspect_ratio` | adds a `preserveAspectRatio` attribute to the SVG
-`aria`                  | adds common accessibility attributes to the SVG (see [PR #34](https://github.com/jamesmartin/inline_svg/pull/34#issue-152062674) for details)
-`aria_hidden`           | adds the `aria-hidden=true` attribute to the SVG
-`fallback`              | set fallback SVG document
+| key                     | description                                                                                                                                                                                                                                                                                                        |
+| :---------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                    | set a ID attribute on the SVG                                                                                                                                                                                                                                                                                      |
+| `class`                 | set a CSS class attribute on the SVG                                                                                                                                                                                                                                                                               |
+| `style`                 | set a CSS style attribute on the SVG                                                                                                                                                                                                                                                                               |
+| `data`                  | add data attributes to the SVG (supply as a hash)                                                                                                                                                                                                                                                                  |
+| `size`                  | set width and height attributes on the SVG <br/> Can also be set using `height` and/or `width` attributes, which take precedence over `size` <br/> Supplied as "{Width} \* {Height}" or "{Number}", so "30px\*45px" becomes `width="30px"` and `height="45px"`, and "50%" becomes `width="50%"` and `height="50%"` |
+| `title`                 | add a \<title\> node inside the top level of the SVG document                                                                                                                                                                                                                                                      |
+| `desc`                  | add a \<desc\> node inside the top level of the SVG document                                                                                                                                                                                                                                                       |
+| `nocomment`             | remove comment tags from the SVG document                                                                                                                                                                                                                                                                          |
+| `preserve_aspect_ratio` | adds a `preserveAspectRatio` attribute to the SVG                                                                                                                                                                                                                                                                  |
+| `aria`                  | adds common accessibility attributes to the SVG (see [PR #34](https://github.com/jamesmartin/inline_svg/pull/34#issue-152062674) for details)                                                                                                                                                                      |
+| `aria_hidden`           | adds the `aria-hidden=true` attribute to the SVG                                                                                                                                                                                                                                                                   |
+| `fallback`              | set fallback SVG document                                                                                                                                                                                                                                                                                          |
 
 Example:
 
@@ -124,8 +124,8 @@ inline_svg_tag(
 Use the `aria: true` option to make `inline_svg_tag` add the following
 accessibility (a11y) attributes to your embedded SVG:
 
-* Adds a `role="img"` attribute to the root SVG element
-* Adds a `aria-labelled-by="title-id desc-id"` attribute to the root SVG
+- Adds a `role="img"` attribute to the root SVG element
+- Adds a `aria-labelled-by="title-id desc-id"` attribute to the root SVG
   element, if the document contains `<title>` or `<desc>` elements
 
 Here's an example:
@@ -146,7 +146,7 @@ Here's an example:
 </svg>
 ```
 
-***Note:*** The title and desc `id` attributes generated for, and referenced by, `aria-labelled-by` are one-way digests based on the value of the title and desc elements and an optional "salt" value using the SHA1 algorithm. This reduces the chance of `inline_svg_tag` embedding elements inside the SVG with `id` attributes that clash with other elements elsewhere on the page.
+**_Note:_** The title and desc `id` attributes generated for, and referenced by, `aria-labelled-by` are one-way digests based on the value of the title and desc elements and an optional "salt" value using the SHA1 algorithm. This reduces the chance of `inline_svg_tag` embedding elements inside the SVG with `id` attributes that clash with other elements elsewhere on the page.
 
 ## Custom Transformations
 
@@ -177,6 +177,7 @@ end
 ```
 
 The custom transformation can then be called like so:
+
 ```haml
 %div
   = inline_svg_tag "some-document.svg", my_custom_attribute: 'some value'
@@ -198,6 +199,7 @@ end
 ```
 
 The custom transformation will be triggered even if you don't pass any attribute value
+
 ```haml
 %div
   = inline_svg_tag "some-document.svg"
@@ -228,7 +230,7 @@ end
 
 Transforms are applied in ascending order (lowest number first).
 
-***Note***: Custom transformations are always applied *after* all built-in
+**_Note_**: Custom transformations are always applied _after_ all built-in
 transformations, regardless of priority.
 
 ## Custom asset file loader
@@ -305,7 +307,9 @@ end
 Which would instead render:
 
 ```html
-<svg class='svg-not-found'><!-- SVG file not found: 'some-missing-file.svg' --></svg>
+<svg class="svg-not-found">
+  <!-- SVG file not found: 'some-missing-file.svg' -->
+</svg>
 ```
 
 Alternatively, `inline_svg_tag` can be configured to raise an exception when a file

@@ -1,306 +1,298 @@
-## Rails 6.1.4 (June 24, 2021) ##
+## Rails 6.1.4 (June 24, 2021)
 
-*   The parameters sent to `ffmpeg` for generating a video preview image are now
-    configurable under `config.active_storage.video_preview_arguments`.
+- The parameters sent to `ffmpeg` for generating a video preview image are now
+  configurable under `config.active_storage.video_preview_arguments`.
 
-    *Brendon Muir*
+  _Brendon Muir_
 
-*   Fix Active Storage update task when running in an engine.
+- Fix Active Storage update task when running in an engine.
 
-    Justin Malčić*
+  Justin Malčić\*
 
-*   Don't raise an error if the mime type is not recognized.
+- Don't raise an error if the mime type is not recognized.
 
-    Fixes #41777.
+  Fixes #41777.
 
-    *Alex Ghiculescu*
+  _Alex Ghiculescu_
 
-*   `ActiveStorage::PreviewError` is raised when a previewer is unable to generate a preview image.
+- `ActiveStorage::PreviewError` is raised when a previewer is unable to generate a preview image.
 
-    *Alex Robbin*
+  _Alex Robbin_
 
-*   respond with 404 given invalid variation key when asking for representations.
+- respond with 404 given invalid variation key when asking for representations.
 
-    *George Claghorn*
+  _George Claghorn_
 
-*   `Blob` creation shouldn't crash if no service selected.
+- `Blob` creation shouldn't crash if no service selected.
 
-    *Alex Ghiculescu*
+  _Alex Ghiculescu_
 
+## Rails 6.1.3.2 (May 05, 2021)
 
-## Rails 6.1.3.2 (May 05, 2021) ##
+- No changes.
 
-*   No changes.
+## Rails 6.1.3.1 (March 26, 2021)
 
+- Marcel is upgraded to version 1.0.0 to avoid a dependency on GPL-licensed
+  mime types data.
 
-## Rails 6.1.3.1 (March 26, 2021) ##
+  _George Claghorn_
 
-*  Marcel is upgraded to version 1.0.0 to avoid a dependency on GPL-licensed
-   mime types data.
+## Rails 6.1.3 (February 17, 2021)
 
-   *George Claghorn*
+- No changes.
 
+## Rails 6.1.2.1 (February 10, 2021)
 
-## Rails 6.1.3 (February 17, 2021) ##
+- No changes.
 
-*   No changes.
+## Rails 6.1.2 (February 09, 2021)
 
+- No changes.
 
-## Rails 6.1.2.1 (February 10, 2021) ##
+## Rails 6.1.1 (January 07, 2021)
 
-*   No changes.
+- Fix S3 multipart uploads when threshold is larger than file.
 
+  _Matt Muller_
 
-## Rails 6.1.2 (February 09, 2021) ##
+## Rails 6.1.0 (December 09, 2020)
 
-*   No changes.
+- Change default queue name of the analysis (`:active_storage_analysis`) and
+  purge (`:active_storage_purge`) jobs to be the job adapter's default (`:default`).
 
+  _Rafael Mendonça França_
 
-## Rails 6.1.1 (January 07, 2021) ##
+- Implement `strict_loading` on ActiveStorage associations.
 
-*   Fix S3 multipart uploads when threshold is larger than file.
+  _David Angulo_
 
-    *Matt Muller*
+- Remove deprecated support to pass `:combine_options` operations to `ActiveStorage::Transformers::ImageProcessing`.
 
+  _Rafael Mendonça França_
 
-## Rails 6.1.0 (December 09, 2020) ##
+- Remove deprecated `ActiveStorage::Transformers::MiniMagickTransformer`.
 
-*   Change default queue name of the analysis (`:active_storage_analysis`) and
-    purge (`:active_storage_purge`) jobs to be the job adapter's default (`:default`).
+  _Rafael Mendonça França_
 
-    *Rafael Mendonça França*
+- Remove deprecated `config.active_storage.queue`.
 
-*   Implement `strict_loading` on ActiveStorage associations.
+  _Rafael Mendonça França_
 
-    *David Angulo*
+- Remove deprecated `ActiveStorage::Downloading`.
 
-*   Remove deprecated support to pass `:combine_options` operations to `ActiveStorage::Transformers::ImageProcessing`.
+  _Rafael Mendonça França_
 
-    *Rafael Mendonça França*
+- Add per-environment configuration support
 
-*   Remove deprecated `ActiveStorage::Transformers::MiniMagickTransformer`.
+  _Pietro Moro_
 
-    *Rafael Mendonça França*
+- The Poppler PDF previewer renders a preview image using the original
+  document's crop box rather than its media box, hiding print margins. This
+  matches the behavior of the MuPDF previewer.
 
-*   Remove deprecated `config.active_storage.queue`.
+  _Vincent Robert_
 
-    *Rafael Mendonça França*
+- Touch parent model when an attachment is purged.
 
-*   Remove deprecated `ActiveStorage::Downloading`.
+  _Víctor Pérez Rodríguez_
 
-    *Rafael Mendonça França*
+- Files can now be served by proxying them from the underlying storage service
+  instead of redirecting to a signed service URL. Use the
+  `rails_storage_proxy_path` and `_url` helpers to proxy an attached file:
 
-*   Add per-environment configuration support
+  ```erb
+  <%= image_tag rails_storage_proxy_path(@user.avatar) %>
+  ```
 
-    *Pietro Moro*
+  To proxy by default, set `config.active_storage.resolve_model_to_route`:
 
-*   The Poppler PDF previewer renders a preview image using the original
-    document's crop box rather than its media box, hiding print margins. This
-    matches the behavior of the MuPDF previewer.
+  ```ruby
+  # Proxy attached files instead.
+  config.active_storage.resolve_model_to_route = :rails_storage_proxy
+  ```
 
-    *Vincent Robert*
+  ```erb
+  <%= image_tag @user.avatar %>
+  ```
 
-*   Touch parent model when an attachment is purged.
+  To redirect to a signed service URL when the default file serving strategy
+  is set to proxying, use the `rails_storage_redirect_path` and `_url` helpers:
 
-    *Víctor Pérez Rodríguez*
+  ```erb
+  <%= image_tag rails_storage_redirect_path(@user.avatar) %>
+  ```
 
-*   Files can now be served by proxying them from the underlying storage service
-    instead of redirecting to a signed service URL. Use the
-    `rails_storage_proxy_path` and `_url` helpers to proxy an attached file:
+  _Jonathan Fleckenstein_
 
-    ```erb
-    <%= image_tag rails_storage_proxy_path(@user.avatar) %>
-    ```
+- Add `config.active_storage.web_image_content_types` to allow applications
+  to add content types (like `image/webp`) in which variants can be processed,
+  instead of letting those images be converted to the fallback PNG format.
 
-    To proxy by default, set `config.active_storage.resolve_model_to_route`:
+  _Jeroen van Haperen_
 
-    ```ruby
-    # Proxy attached files instead.
-    config.active_storage.resolve_model_to_route = :rails_storage_proxy
-    ```
+- Add support for creating variants of `WebP` images out of the box.
 
-    ```erb
-    <%= image_tag @user.avatar %>
-    ```
+  _Dino Maric_
 
-    To redirect to a signed service URL when the default file serving strategy
-    is set to proxying, use the `rails_storage_redirect_path` and `_url` helpers:
+- Only enqueue analysis jobs for blobs with non-null analyzer classes.
 
-    ```erb
-    <%= image_tag rails_storage_redirect_path(@user.avatar) %>
-    ```
+  _Gannon McGibbon_
 
-    *Jonathan Fleckenstein*
+- Previews are created on the same service as the original blob.
 
-*   Add `config.active_storage.web_image_content_types` to allow applications
-    to add content types (like `image/webp`) in which variants can be processed,
-    instead of letting those images be converted to the fallback PNG format.
+  _Peter Zhu_
 
-    *Jeroen van Haperen*
+- Remove unused `disposition` and `content_type` query parameters for `DiskService`.
 
-*   Add support for creating variants of `WebP` images out of the box.
+  _Peter Zhu_
 
-    *Dino Maric*
+- Use `DiskController` for both public and private files.
 
-*   Only enqueue analysis jobs for blobs with non-null analyzer classes.
+  `DiskController` is able to handle multiple services by adding a
+  `service_name` field in the generated URL in `DiskService`.
 
-    *Gannon McGibbon*
+  _Peter Zhu_
 
-*   Previews are created on the same service as the original blob.
+- Variants are tracked in the database to avoid existence checks in the storage service.
 
-    *Peter Zhu*
+  _George Claghorn_
 
-*   Remove unused `disposition` and `content_type` query parameters for `DiskService`.
+- Deprecate `service_url` methods in favour of `url`.
 
-    *Peter Zhu*
+  Deprecate `Variant#service_url` and `Preview#service_url` to instead use
+  `#url` method to be consistent with `Blob`.
 
-*   Use `DiskController` for both public and private files.
+  _Peter Zhu_
 
-    `DiskController` is able to handle multiple services by adding a
-    `service_name` field in the generated URL in `DiskService`.
+- Permanent URLs for public storage blobs.
 
-    *Peter Zhu*
+  Services can be configured in `config/storage.yml` with a new key
+  `public: true | false` to indicate whether a service holds public
+  blobs or private blobs. Public services will always return a permanent URL.
 
-*   Variants are tracked in the database to avoid existence checks in the storage service.
+  Deprecates `Blob#service_url` in favor of `Blob#url`.
 
-    *George Claghorn*
+  _Peter Zhu_
 
-*   Deprecate `service_url` methods in favour of `url`.
+- Make services aware of configuration names.
 
-    Deprecate `Variant#service_url` and `Preview#service_url` to instead use
-    `#url` method to be consistent with `Blob`.
+  _Gannon McGibbon_
 
-    *Peter Zhu*
+- The `Content-Type` header is set on image variants when they're uploaded to third-party storage services.
 
-*   Permanent URLs for public storage blobs.
+  _Kyle Ribordy_
 
-    Services can be configured in `config/storage.yml` with a new key
-    `public: true | false` to indicate whether a service holds public
-    blobs or private blobs. Public services will always return a permanent URL.
+- Allow storage services to be configured per attachment.
 
-    Deprecates `Blob#service_url` in favor of `Blob#url`.
+  ```ruby
+  class User < ActiveRecord::Base
+    has_one_attached :avatar, service: :s3
+  end
 
-    *Peter Zhu*
+  class Gallery < ActiveRecord::Base
+    has_many_attached :photos, service: :s3
+  end
+  ```
 
-*   Make services aware of configuration names.
+  _Dmitry Tsepelev_
 
-    *Gannon McGibbon*
+- You can optionally provide a custom blob key when attaching a new file:
 
-*   The `Content-Type` header is set on image variants when they're uploaded to third-party storage services.
+  ```ruby
+  user.avatar.attach key: "avatars/#{user.id}.jpg",
+    io: io, content_type: "image/jpeg", filename: "avatar.jpg"
+  ```
 
-    *Kyle Ribordy*
+  Active Storage will store the blob's data on the configured service at the provided key.
 
-*   Allow storage services to be configured per attachment.
+  _George Claghorn_
 
-    ```ruby
-    class User < ActiveRecord::Base
-      has_one_attached :avatar, service: :s3
-    end
+- Replace `Blob.create_after_upload!` with `Blob.create_and_upload!` and deprecate the former.
 
-    class Gallery < ActiveRecord::Base
-      has_many_attached :photos, service: :s3
-    end
-    ```
+  `create_after_upload!` has been removed since it could lead to data
+  corruption by uploading to a key on the storage service which happened to
+  be already taken. Creating the record would then correctly raise a
+  database uniqueness exception but the stored object would already have
+  overwritten another. `create_and_upload!` swaps the order of operations
+  so that the key gets reserved up-front or the uniqueness error gets raised,
+  before the upload to a key takes place.
 
-    *Dmitry Tsepelev*
+  _Julik Tarkhanov_
 
-*   You can optionally provide a custom blob key when attaching a new file:
+- Set content disposition in direct upload using `filename` and `disposition` parameters to `ActiveStorage::Service#headers_for_direct_upload`.
 
-    ```ruby
-    user.avatar.attach key: "avatars/#{user.id}.jpg",
-      io: io, content_type: "image/jpeg", filename: "avatar.jpg"
-    ```
+  _Peter Zhu_
 
-    Active Storage will store the blob's data on the configured service at the provided key.
+- Allow record to be optionally passed to blob finders to make sharding
+  easier.
 
-    *George Claghorn*
+  _Gannon McGibbon_
 
-*   Replace `Blob.create_after_upload!` with `Blob.create_and_upload!` and deprecate the former.
+- Switch from `azure-storage` gem to `azure-storage-blob` gem for Azure service.
 
-    `create_after_upload!` has been removed since it could lead to data
-    corruption by uploading to a key on the storage service which happened to
-    be already taken. Creating the record would then correctly raise a
-    database uniqueness exception but the stored object would already have
-    overwritten another. `create_and_upload!` swaps the order of operations
-    so that the key gets reserved up-front or the uniqueness error gets raised,
-    before the upload to a key takes place.
+  _Peter Zhu_
 
-    *Julik Tarkhanov*
+- Add `config.active_storage.draw_routes` to disable Active Storage routes.
 
-*   Set content disposition in direct upload using `filename` and `disposition` parameters to `ActiveStorage::Service#headers_for_direct_upload`.
+  _Gannon McGibbon_
 
-    *Peter Zhu*
+- Image analysis is skipped if ImageMagick returns an error.
 
-*   Allow record to be optionally passed to blob finders to make sharding
-    easier.
+  `ActiveStorage::Analyzer::ImageAnalyzer#metadata` would previously raise a
+  `MiniMagick::Error`, which caused persistent `ActiveStorage::AnalyzeJob`
+  failures. It now logs the error and returns `{}`, resulting in no metadata
+  being added to the offending image blob.
 
-    *Gannon McGibbon*
+  _George Claghorn_
 
-*   Switch from `azure-storage` gem to `azure-storage-blob` gem for Azure service.
+- Method calls on singular attachments return `nil` when no file is attached.
 
-    *Peter Zhu*
+  Previously, assuming the following User model, `user.avatar.filename` would
+  raise a `Module::DelegationError` if no avatar was attached:
 
-*   Add `config.active_storage.draw_routes` to disable Active Storage routes.
+  ```ruby
+  class User < ApplicationRecord
+    has_one_attached :avatar
+  end
+  ```
 
-    *Gannon McGibbon*
+  They now return `nil`.
 
-*   Image analysis is skipped if ImageMagick returns an error.
+  _Matthew Tanous_
 
-    `ActiveStorage::Analyzer::ImageAnalyzer#metadata` would previously raise a
-    `MiniMagick::Error`, which caused persistent `ActiveStorage::AnalyzeJob`
-    failures. It now logs the error and returns `{}`, resulting in no metadata
-    being added to the offending image blob.
+- The mirror service supports direct uploads.
 
-    *George Claghorn*
+  New files are directly uploaded to the primary service. When a
+  directly-uploaded file is attached to a record, a background job is enqueued
+  to copy it to each secondary service.
 
-*   Method calls on singular attachments return `nil` when no file is attached.
+  Configure the queue used to process mirroring jobs by setting
+  `config.active_storage.queues.mirror`. The default is `:active_storage_mirror`.
 
-    Previously, assuming the following User model, `user.avatar.filename` would
-    raise a `Module::DelegationError` if no avatar was attached:
+  _George Claghorn_
 
-    ```ruby
-    class User < ApplicationRecord
-      has_one_attached :avatar
-    end
-    ```
+- The S3 service now permits uploading files larger than 5 gigabytes.
 
-    They now return `nil`.
+  When uploading a file greater than 100 megabytes in size, the service
+  transparently switches to [multipart uploads](https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html)
+  using a part size computed from the file's total size and S3's part count limit.
 
-    *Matthew Tanous*
+  No application changes are necessary to take advantage of this feature. You
+  can customize the default 100 MB multipart upload threshold in your S3
+  service's configuration:
 
-*   The mirror service supports direct uploads.
+  ```yaml
+  production:
+    service: s3
+    access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
+    secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+    region: us-east-1
+    bucket: my-bucket
+    upload:
+      multipart_threshold: <%= 250.megabytes %>
+  ```
 
-    New files are directly uploaded to the primary service. When a
-    directly-uploaded file is attached to a record, a background job is enqueued
-    to copy it to each secondary service.
-
-    Configure the queue used to process mirroring jobs by setting
-    `config.active_storage.queues.mirror`. The default is `:active_storage_mirror`.
-
-    *George Claghorn*
-
-*   The S3 service now permits uploading files larger than 5 gigabytes.
-
-    When uploading a file greater than 100 megabytes in size, the service
-    transparently switches to [multipart uploads](https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html)
-    using a part size computed from the file's total size and S3's part count limit.
-
-    No application changes are necessary to take advantage of this feature. You
-    can customize the default 100 MB multipart upload threshold in your S3
-    service's configuration:
-
-    ```yaml
-    production:
-      service: s3
-      access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-      secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
-      region: us-east-1
-      bucket: my-bucket
-      upload:
-        multipart_threshold: <%= 250.megabytes %>
-    ```
-
-    *George Claghorn*
-
+  _George Claghorn_
 
 Please check [6-0-stable](https://github.com/rails/rails/blob/6-0-stable/activestorage/CHANGELOG.md) for previous changes.

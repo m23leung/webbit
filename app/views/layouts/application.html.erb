@@ -91,7 +91,7 @@
             <ul class="dropdown-menu dropdown-menu-right list-none hidden absolute left-o rounded-b border border-gray-400 shadow">
             <h5 class="mt-2 uppercase text-xs text-gray-500 font-normal py-2 pl-3 tracking-wide">My Stuff</h5>
               <li>
-                <%= link_to "#", class: "hover:bg-purple-500 hover:text-white text-gray-700 no-underline block py-2 px-4 flex items-center text-sm" do %>
+                <%= link_to profile_path(current_user), class: "hover:bg-purple-500 hover:text-white text-gray-700 no-underline block py-2 px-4 flex items-center text-sm" do %>
                 <%= render_svg "icons/user", styles: "icon-md fill-current text-gray-600 mr-3" %>        My Profile         
                 <% end %>
               </li>
@@ -115,7 +115,7 @@
   </nav>
 
   <%= content_for?(:content) ? yield(:content) : yield %>
-
+  <div class="js-notice dynamic-notice fadeInUp animated"></div>
   </body>
 </html>
    

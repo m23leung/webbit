@@ -14,7 +14,7 @@ a standalone library.
 
 # Requirements
 
-* Ruby 2.3+, JRuby 9+
+- Ruby 2.3+, JRuby 9+
 
 Windows users **must** ensure the `ffi` gem (`>= 1.0.11`) is installed in order to use ChildProcess.
 
@@ -126,7 +126,7 @@ search.io.stdin.close
 search.wait
 ```
 
-#### Prefer posix_spawn on *nix
+#### Prefer posix_spawn on \*nix
 
 If the parent process is using a lot of memory, `fork+exec` can be very expensive. The `posix_spawn()` API removes this overhead.
 
@@ -178,16 +178,16 @@ ChildProcess.logger = logger
 
 ## Caveats
 
-* With JRuby on Unix, modifying `ENV["PATH"]` before using childprocess could lead to 'Command not found' errors, since JRuby is unable to modify the environment used for PATH searches in `java.lang.ProcessBuilder`. This can be avoided by setting `ChildProcess.posix_spawn = true`.
-* With JRuby on Java >= 9, the JVM may need to be configured to allow JRuby to access neccessary implementations; this can be done by adding `--add-opens java.base/java.io=org.jruby.dist` and `--add-opens java.base/sun.nio.ch=org.jruby.dist` to the `JAVA_OPTS` environment variable that is used by JRuby when launching the JVM.
+- With JRuby on Unix, modifying `ENV["PATH"]` before using childprocess could lead to 'Command not found' errors, since JRuby is unable to modify the environment used for PATH searches in `java.lang.ProcessBuilder`. This can be avoided by setting `ChildProcess.posix_spawn = true`.
+- With JRuby on Java >= 9, the JVM may need to be configured to allow JRuby to access neccessary implementations; this can be done by adding `--add-opens java.base/java.io=org.jruby.dist` and `--add-opens java.base/sun.nio.ch=org.jruby.dist` to the `JAVA_OPTS` environment variable that is used by JRuby when launching the JVM.
 
 # Implementation
 
 How the process is launched and killed depends on the platform:
 
-* Unix     : `fork + exec` (or `posix_spawn` if enabled)
-* Windows  : `CreateProcess()` and friends
-* JRuby    : `java.lang.{Process,ProcessBuilder}`
+- Unix : `fork + exec` (or `posix_spawn` if enabled)
+- Windows : `CreateProcess()` and friends
+- JRuby : `java.lang.{Process,ProcessBuilder}`
 
 # Note on Patches/Pull Requests
 

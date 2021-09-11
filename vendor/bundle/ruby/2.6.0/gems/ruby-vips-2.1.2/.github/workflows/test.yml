@@ -11,7 +11,7 @@ on:
 
 env:
   NOKOGIRI_USE_SYSTEM_LIBRARIES: true
-  SPEC_OPTS: '--backtrace'
+  SPEC_OPTS: "--backtrace"
 
 jobs:
   lint:
@@ -25,7 +25,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: "2.7"
           bundler-cache: true
 
       - name: Run standard Ruby linter
@@ -36,7 +36,7 @@ jobs:
 
     strategy:
       matrix:
-        os-version: [ 'ubuntu-20.04' ]
+        os-version: ["ubuntu-20.04"]
         ruby-version:
           - 2.0
           - 2.1
@@ -65,8 +65,7 @@ jobs:
       - name: Update apt
         env:
           DEBIAN_FRONTEND: noninteractive
-        run: 
-          sudo apt-get update -qq -o Acquire::Retries=3
+        run: sudo apt-get update -qq -o Acquire::Retries=3
 
       - name: Install libvips
         env:
@@ -74,7 +73,7 @@ jobs:
         run:
           # we only need the library
           sudo apt-get install --fix-missing -qq -o Acquire::Retries=3
-            libvips 
+          libvips
 
       - name: Run Tests
         run: bundle exec rake spec

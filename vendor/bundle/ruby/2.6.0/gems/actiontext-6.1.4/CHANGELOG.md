@@ -1,101 +1,93 @@
-## Rails 6.1.4 (June 24, 2021) ##
+## Rails 6.1.4 (June 24, 2021)
 
-*   Always render attachment partials as HTML with `:html` format inside trix editor.
+- Always render attachment partials as HTML with `:html` format inside trix editor.
 
-    *James Brooks*
+  _James Brooks_
 
+## Rails 6.1.3.2 (May 05, 2021)
 
-## Rails 6.1.3.2 (May 05, 2021) ##
+- No changes.
 
-*   No changes.
+## Rails 6.1.3.1 (March 26, 2021)
 
+- No changes.
 
-## Rails 6.1.3.1 (March 26, 2021) ##
+## Rails 6.1.3 (February 17, 2021)
 
-*   No changes.
+- No changes.
 
+## Rails 6.1.2.1 (February 10, 2021)
 
-## Rails 6.1.3 (February 17, 2021) ##
+- No changes.
 
-*   No changes.
+## Rails 6.1.2 (February 09, 2021)
 
+- No changes.
 
-## Rails 6.1.2.1 (February 10, 2021) ##
+## Rails 6.1.1 (January 07, 2021)
 
-*   No changes.
+- No changes.
 
+## Rails 6.1.0 (December 09, 2020)
 
-## Rails 6.1.2 (February 09, 2021) ##
+- Declare `ActionText::FixtureSet.attachment` to generate an
+  `<action-text-attachment sgid="..."></action-text-attachment>` element with
+  a valid `sgid` attribute.
 
-*   No changes.
+  ```ruby
+  hello_world_review_content:
+    record: hello_world (Review)
+    name: content
+    body: <p><%= ActionText::FixtureSet.attachment("messages", :hello_world) %> is great!</p>
+  ```
 
+  _Sean Doyle_
 
-## Rails 6.1.1 (January 07, 2021) ##
+- Locate `fill_in_rich_text_area` by `<label>` text
 
-*   No changes.
+  In addition to searching for `<trix-editor>` elements with the appropriate
+  `aria-label` attribute, also support locating elements that match the
+  corresponding `<label>` element's text.
 
+  _Sean Doyle_
 
-## Rails 6.1.0 (December 09, 2020) ##
+- Be able to add a default value to `rich_text_area`.
 
-*   Declare `ActionText::FixtureSet.attachment` to generate an
-    `<action-text-attachment sgid="..."></action-text-attachment>` element with
-    a valid `sgid` attribute.
+  ```ruby
+  form.rich_text_area :content, value: "<h1>Hello world</h1>"
+  #=> <input type="hidden" name="message[content]" id="message_content_trix_input_message_1" value="<h1>Hello world</h1>">
+  ```
 
-    ```ruby
-    hello_world_review_content:
-      record: hello_world (Review)
-      name: content
-      body: <p><%= ActionText::FixtureSet.attachment("messages", :hello_world) %> is great!</p>
-    ```
+  _Paulo Ancheta_
 
-    *Sean Doyle*
+- Add method to confirm rich text content existence by adding `?` after rich
+  text attribute.
 
-*   Locate `fill_in_rich_text_area` by `<label>` text
+  ```ruby
+  message = Message.create!(body: "<h1>Funny times!</h1>")
+  message.body? #=> true
+  ```
 
-    In addition to searching for `<trix-editor>` elements with the appropriate
-    `aria-label` attribute, also support locating elements that match the
-    corresponding `<label>` element's text.
+  _Kyohei Toyoda_
 
-    *Sean Doyle*
+- The `fill_in_rich_text_area` system test helper locates a Trix editor
+  and fills it in with the given HTML.
 
-*   Be able to add a default value to `rich_text_area`.
+  ```ruby
+  # <trix-editor id="message_content" ...></trix-editor>
+  fill_in_rich_text_area "message_content", with: "Hello <em>world!</em>"
 
-    ```ruby
-    form.rich_text_area :content, value: "<h1>Hello world</h1>"
-    #=> <input type="hidden" name="message[content]" id="message_content_trix_input_message_1" value="<h1>Hello world</h1>">
-    ```
+  # <trix-editor placeholder="Your message here" ...></trix-editor>
+  fill_in_rich_text_area "Your message here", with: "Hello <em>world!</em>"
 
-    *Paulo Ancheta*
+  # <trix-editor aria-label="Message content" ...></trix-editor>
+  fill_in_rich_text_area "Message content", with: "Hello <em>world!</em>"
 
-*   Add method to confirm rich text content existence by adding `?` after rich
-    text attribute.
+  # <input id="trix_input_1" name="message[content]" type="hidden">
+  # <trix-editor input="trix_input_1"></trix-editor>
+  fill_in_rich_text_area "message[content]", with: "Hello <em>world!</em>"
+  ```
 
-    ```ruby
-    message = Message.create!(body: "<h1>Funny times!</h1>")
-    message.body? #=> true
-    ```
-
-    *Kyohei Toyoda*
-
-*   The `fill_in_rich_text_area` system test helper locates a Trix editor
-    and fills it in with the given HTML.
-
-    ```ruby
-    # <trix-editor id="message_content" ...></trix-editor>
-    fill_in_rich_text_area "message_content", with: "Hello <em>world!</em>"
-
-    # <trix-editor placeholder="Your message here" ...></trix-editor>
-    fill_in_rich_text_area "Your message here", with: "Hello <em>world!</em>"
-
-    # <trix-editor aria-label="Message content" ...></trix-editor>
-    fill_in_rich_text_area "Message content", with: "Hello <em>world!</em>"
-
-    # <input id="trix_input_1" name="message[content]" type="hidden">
-    # <trix-editor input="trix_input_1"></trix-editor>
-    fill_in_rich_text_area "message[content]", with: "Hello <em>world!</em>"
-    ```
-
-    *George Claghorn*
-
+  _George Claghorn_
 
 Please check [6-0-stable](https://github.com/rails/rails/blob/6-0-stable/actiontext/CHANGELOG.md) for previous changes.

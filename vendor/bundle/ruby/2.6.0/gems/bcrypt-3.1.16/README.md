@@ -2,11 +2,10 @@
 
 An easy way to keep your users' passwords secure.
 
-* https://github.com/codahale/bcrypt-ruby/tree/master
+- https://github.com/codahale/bcrypt-ruby/tree/master
 
 [![Travis Build Status](https://travis-ci.org/codahale/bcrypt-ruby.svg?branch=master)](https://travis-ci.org/codahale/bcrypt-ruby)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/6fplerx9lnaf0hyo?svg=true)](https://ci.appveyor.com/project/TJSchuck35975/bcrypt-ruby)
-
 
 ## Why you should use `bcrypt()`
 
@@ -19,7 +18,7 @@ security experts is not a professional response to risk.
 
 `bcrypt()` allows you to easily harden your application against these kinds of attacks.
 
-*Note*: JRuby versions of the bcrypt gem `<= 2.1.3` had a [security
+_Note_: JRuby versions of the bcrypt gem `<= 2.1.3` had a [security
 vulnerability](https://www.mindrot.org/files/jBCrypt/internat.adv) that
 was fixed in `>= 2.1.4`. If you used a vulnerable version to hash
 passwords with international characters in them, you will need to
@@ -31,17 +30,18 @@ re-hash those passwords. This vulnerability only affected the JRuby gem.
 
 The bcrypt gem is available on the following Ruby platforms:
 
-* JRuby
-* RubyInstaller 2.0 – 2.5 builds on Windows with the DevKit
-* Any 2.0 – 2.5 Ruby on a BSD/OS X/Linux system with a compiler
+- JRuby
+- RubyInstaller 2.0 – 2.5 builds on Windows with the DevKit
+- Any 2.0 – 2.5 Ruby on a BSD/OS X/Linux system with a compiler
 
 ## How to use `bcrypt()` in your Rails application
 
-*Note*: Rails versions >= 3 ship with `ActiveModel::SecurePassword` which uses bcrypt-ruby.
+_Note_: Rails versions >= 3 ship with `ActiveModel::SecurePassword` which uses bcrypt-ruby.
 `has_secure_password` [docs](https://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password)
 implements a similar authentication strategy to the code below.
 
 ### The _User_ model
+
 ```ruby
 require 'bcrypt'
 
@@ -59,7 +59,9 @@ class User < ActiveRecord::Base
   end
 end
 ```
+
 ### Creating an account
+
 ```ruby
 def create
   @user = User.new(params[:user])
@@ -67,7 +69,9 @@ def create
   @user.save!
 end
 ```
+
 ### Authenticating a user
+
 ```ruby
 def login
   @user = User.find_by_email(params[:email])
@@ -78,7 +82,9 @@ def login
   end
 end
 ```
+
 ## How to use bcrypt-ruby in general
+
 ```ruby
 require 'bcrypt'
 
@@ -94,6 +100,7 @@ my_password = BCrypt::Password.new("$2a$12$K0ByB.6YI2/OYrB4fQOYLe6Tv0datUVf6VZ/2
 my_password == "my password"     #=> true
 my_password == "not my password" #=> false
 ```
+
 Check the rdocs for more details -- BCrypt, BCrypt::Password.
 
 ## How `bcrypt()` works
@@ -162,6 +169,7 @@ stateless authentication architecture (e.g., HTTP Basic Auth), you will want to 
 server load and keep your request times down. This will lower the security provided you, but there are few alternatives.
 
 To change the default cost factor used by bcrypt-ruby, use `BCrypt::Engine.cost = new_value`:
+
 ```ruby
 BCrypt::Password.create('secret').cost
   #=> 12, the default provided by bcrypt-ruby
@@ -171,6 +179,7 @@ BCrypt::Engine.cost = 8
 BCrypt::Password.create('secret').cost
   #=> 8
 ```
+
 The default cost can be overridden as needed by passing an options hash with a different cost:
 
     BCrypt::Password.create('secret', :cost => 6).cost  #=> 6
@@ -190,5 +199,5 @@ https://www.schneier.com/book-practical.html
 
 # Etc
 
-* Author  :: Coda Hale <coda.hale@gmail.com>
-* Website :: https://codahale.com
+- Author :: Coda Hale <coda.hale@gmail.com>
+- Website :: https://codahale.com

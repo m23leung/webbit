@@ -14,14 +14,14 @@ gem install msgpack
 
 ## Use cases
 
-* Create REST API returing MessagePack using Rails + [RABL](https://github.com/nesquena/rabl)
-* Store objects efficiently in memcached or Redis
-* Upload data in efficient format from mobile devices. See also MessagePack for [Objective-C](https://github.com/msgpack/msgpack-objectivec) and [Java](https://github.com/msgpack/msgpack-java)
+- Create REST API returing MessagePack using Rails + [RABL](https://github.com/nesquena/rabl)
+- Store objects efficiently in memcached or Redis
+- Upload data in efficient format from mobile devices. See also MessagePack for [Objective-C](https://github.com/msgpack/msgpack-objectivec) and [Java](https://github.com/msgpack/msgpack-java)
 
 ## Links
 
-* [Github](https://github.com/msgpack/msgpack-ruby)
-* [API document](http://ruby.msgpack.org/)
+- [Github](https://github.com/msgpack/msgpack-ruby)
+- [API document](http://ruby.msgpack.org/)
 
 ## Streaming API
 

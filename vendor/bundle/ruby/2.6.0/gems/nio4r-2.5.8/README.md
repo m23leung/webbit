@@ -17,57 +17,57 @@ writing.
 
 ## Projects using nio4r
 
-* [ActionCable]: Rails 5 WebSocket protocol, uses nio4r for a WebSocket server
-* [Celluloid]: Actor-based concurrency framework, uses nio4r for async I/O
-* [Async]: Asynchronous I/O framework for Ruby
-* [Puma]: Ruby/Rack web server built for concurrency
+- [ActionCable]: Rails 5 WebSocket protocol, uses nio4r for a WebSocket server
+- [Celluloid]: Actor-based concurrency framework, uses nio4r for async I/O
+- [Async]: Asynchronous I/O framework for Ruby
+- [Puma]: Ruby/Rack web server built for concurrency
 
-[ActionCable]: https://rubygems.org/gems/actioncable
-[Celluloid]: https://github.com/celluloid/celluloid-io
-[Async]: https://github.com/socketry/async
-[Puma]: https://github.com/puma/puma
+[actioncable]: https://rubygems.org/gems/actioncable
+[celluloid]: https://github.com/celluloid/celluloid-io
+[async]: https://github.com/socketry/async
+[puma]: https://github.com/puma/puma
 
 ## Goals
 
-* Expose high-level interfaces for stateful IO selectors
-* Keep the API small to maximize both portability and performance across many
+- Expose high-level interfaces for stateful IO selectors
+- Keep the API small to maximize both portability and performance across many
   different OSes and Ruby VMs
-* Provide inherently thread-safe facilities for working with IO objects
+- Provide inherently thread-safe facilities for working with IO objects
 
 ## Supported platforms
 
-* Ruby 2.4
-* Ruby 2.5
-* Ruby 2.6
-* Ruby 2.7
-* Ruby 3.0
-* [JRuby](https://github.com/jruby/jruby)
-* [TruffleRuby](https://github.com/oracle/truffleruby)
+- Ruby 2.4
+- Ruby 2.5
+- Ruby 2.6
+- Ruby 2.7
+- Ruby 3.0
+- [JRuby](https://github.com/jruby/jruby)
+- [TruffleRuby](https://github.com/oracle/truffleruby)
 
 ## Supported backends
 
-* **libev**: MRI C extension targeting multiple native IO selector APIs (e.g epoll, kqueue)
-* **Java NIO**: JRuby extension which wraps the Java NIO subsystem
-* **Pure Ruby**: `Kernel.select`-based backend that should work on any Ruby interpreter
+- **libev**: MRI C extension targeting multiple native IO selector APIs (e.g epoll, kqueue)
+- **Java NIO**: JRuby extension which wraps the Java NIO subsystem
+- **Pure Ruby**: `Kernel.select`-based backend that should work on any Ruby interpreter
 
 ## Documentation
 
 [Please see the nio4r wiki](https://github.com/socketry/nio4r/wiki)
 for more detailed documentation and usage notes:
 
-* [Getting Started]: Introduction to nio4r's components
-* [Selectors]: monitor multiple `IO` objects for readiness events
-* [Monitors]: control interests and inspect readiness for specific `IO` objects
-* [Byte Buffers]: fixed-size native buffers for high-performance I/O
+- [Getting Started]: Introduction to nio4r's components
+- [Selectors]: monitor multiple `IO` objects for readiness events
+- [Monitors]: control interests and inspect readiness for specific `IO` objects
+- [Byte Buffers]: fixed-size native buffers for high-performance I/O
 
-[Getting Started]: https://github.com/socketry/nio4r/wiki/Getting-Started
-[Selectors]: https://github.com/socketry/nio4r/wiki/Selectors
-[Monitors]: https://github.com/socketry/nio4r/wiki/Monitors
-[Byte Buffers]: https://github.com/socketry/nio4r/wiki/Byte-Buffers
+[getting started]: https://github.com/socketry/nio4r/wiki/Getting-Started
+[selectors]: https://github.com/socketry/nio4r/wiki/Selectors
+[monitors]: https://github.com/socketry/nio4r/wiki/Monitors
+[byte buffers]: https://github.com/socketry/nio4r/wiki/Byte-Buffers
 
 See also:
 
-* [YARD API documentation](http://www.rubydoc.info/gems/nio4r/frames)
+- [YARD API documentation](http://www.rubydoc.info/gems/nio4r/frames)
 
 ## Non-goals
 
@@ -77,8 +77,8 @@ top of. nio4r provides a minimal API such that individual Ruby implementers
 may choose to produce optimized versions for their platform, without having
 to maintain a large codebase.
 
-[EventMachine]: https://github.com/eventmachine/eventmachine
-[Cool.io]: https://coolio.github.io/
+[eventmachine]: https://github.com/eventmachine/eventmachine
+[cool.io]: https://coolio.github.io/
 
 ## Releases
 
@@ -130,4 +130,4 @@ Released under the BSD license. See [ext/libev/LICENSE] for details.
 
 Copyright, 2007-2019, by Marc Alexander Lehmann.
 
-[ext/libev/LICENSE]: https://github.com/socketry/nio4r/blob/master/ext/libev/LICENSE
+[ext/libev/license]: https://github.com/socketry/nio4r/blob/master/ext/libev/LICENSE

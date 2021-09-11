@@ -12,31 +12,31 @@
 # SupportedStyles: leading, trailing
 Layout/DotPosition:
   Exclude:
-    - 'spec/finds_asset_paths_spec.rb'
-    - 'spec/helpers/inline_svg_spec.rb'
-    - 'spec/id_generator_spec.rb'
-    - 'spec/transformation_pipeline/transformations/aria_attributes_spec.rb'
-    - 'spec/transformation_pipeline/transformations/data_attributes_spec.rb'
+    - "spec/finds_asset_paths_spec.rb"
+    - "spec/helpers/inline_svg_spec.rb"
+    - "spec/id_generator_spec.rb"
+    - "spec/transformation_pipeline/transformations/aria_attributes_spec.rb"
+    - "spec/transformation_pipeline/transformations/data_attributes_spec.rb"
 
 # Offense count: 2
 # Cop supports --auto-correct.
 Layout/EmptyLineAfterMagicComment:
   Exclude:
-    - 'inline_svg.gemspec'
-    - 'spec/cached_asset_file_spec.rb'
+    - "inline_svg.gemspec"
+    - "spec/cached_asset_file_spec.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: AllowAdjacentOneLineDefs, NumberOfEmptyLines.
 Layout/EmptyLineBetweenDefs:
   Exclude:
-    - 'spec/inline_svg_spec.rb'
+    - "spec/inline_svg_spec.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Layout/EmptyLinesAroundAccessModifier:
   Exclude:
-    - 'lib/inline_svg/cached_asset_file.rb'
+    - "lib/inline_svg/cached_asset_file.rb"
 
 # Offense count: 8
 # Cop supports --auto-correct.
@@ -44,10 +44,10 @@ Layout/EmptyLinesAroundAccessModifier:
 # SupportedStyles: empty_lines, no_empty_lines
 Layout/EmptyLinesAroundBlockBody:
   Exclude:
-    - 'spec/helpers/inline_svg_spec.rb'
-    - 'spec/inline_svg_spec.rb'
-    - 'spec/io_resource_spec.rb'
-    - 'spec/transformation_pipeline/transformations_spec.rb'
+    - "spec/helpers/inline_svg_spec.rb"
+    - "spec/inline_svg_spec.rb"
+    - "spec/io_resource_spec.rb"
+    - "spec/transformation_pipeline/transformations_spec.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -55,7 +55,7 @@ Layout/EmptyLinesAroundBlockBody:
 # SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines
 Layout/EmptyLinesAroundClassBody:
   Exclude:
-    - 'lib/inline_svg.rb'
+    - "lib/inline_svg.rb"
 
 # Offense count: 4
 # Cop supports --auto-correct.
@@ -70,13 +70,13 @@ Layout/IndentArray:
 # SupportedStyles: auto_detection, squiggly, active_support, powerpack, unindent
 Layout/IndentHeredoc:
   Exclude:
-    - 'spec/helpers/inline_svg_spec.rb'
+    - "spec/helpers/inline_svg_spec.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Layout/LeadingCommentSpace:
   Exclude:
-    - 'Rakefile'
+    - "Rakefile"
 
 # Offense count: 4
 # Cop supports --auto-correct.
@@ -84,8 +84,8 @@ Layout/LeadingCommentSpace:
 # SupportedStyles: aligned, indented, indented_relative_to_receiver
 Layout/MultilineMethodCallIndentation:
   Exclude:
-    - 'spec/transformation_pipeline/transformations/data_attributes_spec.rb'
-    - 'spec/transformation_pipeline/transformations/style_attribute_spec.rb'
+    - "spec/transformation_pipeline/transformations/data_attributes_spec.rb"
+    - "spec/transformation_pipeline/transformations/style_attribute_spec.rb"
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -101,13 +101,13 @@ Layout/SpaceAroundEqualsInParameterDefault:
 # SupportedStylesForEmptyBraces: space, no_space
 Layout/SpaceInsideBlockBraces:
   Exclude:
-    - 'lib/inline_svg/transform_pipeline/transformations.rb'
+    - "lib/inline_svg/transform_pipeline/transformations.rb"
 
 # Offense count: 2
 # Cop supports --auto-correct.
 Layout/SpaceInsideBrackets:
   Exclude:
-    - 'lib/inline_svg.rb'
+    - "lib/inline_svg.rb"
 
 # Offense count: 20
 # Cop supports --auto-correct.
@@ -116,61 +116,61 @@ Layout/SpaceInsideBrackets:
 # SupportedStylesForEmptyBraces: space, no_space
 Layout/SpaceInsideHashLiteralBraces:
   Exclude:
-    - 'spec/helpers/inline_svg_spec.rb'
-    - 'spec/inline_svg_spec.rb'
-    - 'spec/transformation_pipeline/transformations/data_attributes_spec.rb'
-    - 'spec/transformation_pipeline/transformations_spec.rb'
+    - "spec/helpers/inline_svg_spec.rb"
+    - "spec/inline_svg_spec.rb"
+    - "spec/transformation_pipeline/transformations/data_attributes_spec.rb"
+    - "spec/transformation_pipeline/transformations_spec.rb"
 
 # Offense count: 4
 # Cop supports --auto-correct.
 Layout/SpaceInsideParens:
   Exclude:
-    - 'lib/inline_svg/transform_pipeline/transformations.rb'
-    - 'spec/helpers/inline_svg_spec.rb'
+    - "lib/inline_svg/transform_pipeline/transformations.rb"
+    - "spec/helpers/inline_svg_spec.rb"
 
 # Offense count: 3
 # Cop supports --auto-correct.
 Layout/TrailingWhitespace:
   Exclude:
-    - 'spec/io_resource_spec.rb'
+    - "spec/io_resource_spec.rb"
 
 # Offense count: 2
 Lint/AmbiguousOperator:
   Exclude:
-    - 'spec/io_resource_spec.rb'
+    - "spec/io_resource_spec.rb"
 
 # Offense count: 2
 Lint/ShadowingOuterLocalVariable:
   Exclude:
-    - 'lib/inline_svg/transform_pipeline/transformations/description.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/title.rb'
+    - "lib/inline_svg/transform_pipeline/transformations/description.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/title.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Lint/UnneededSplatExpansion:
   Exclude:
-    - 'lib/inline_svg.rb'
+    - "lib/inline_svg.rb"
 
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
 Lint/UnusedBlockArgument:
   Exclude:
-    - 'lib/inline_svg/railtie.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations.rb'
+    - "lib/inline_svg/railtie.rb"
+    - "lib/inline_svg/transform_pipeline/transformations.rb"
 
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
 Lint/UnusedMethodArgument:
   Exclude:
-    - 'spec/inline_svg_spec.rb'
+    - "spec/inline_svg_spec.rb"
 
 # Offense count: 2
 Lint/UselessAssignment:
   Exclude:
-    - 'spec/cached_asset_file_spec.rb'
-    - 'spec/transformation_pipeline/transformations/transformation_spec.rb'
+    - "spec/cached_asset_file_spec.rb"
+    - "spec/transformation_pipeline/transformations/transformation_spec.rb"
 
 # Offense count: 1
 Metrics/AbcSize:
@@ -197,13 +197,13 @@ Metrics/MethodLength:
 # SupportedStyles: snake_case, normalcase, non_integer
 Naming/VariableNumber:
   Exclude:
-    - 'spec/cached_asset_file_spec.rb'
+    - "spec/cached_asset_file_spec.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Performance/StringReplacement:
   Exclude:
-    - 'lib/inline_svg/transform_pipeline/transformations/data_attributes.rb'
+    - "lib/inline_svg/transform_pipeline/transformations/data_attributes.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -211,7 +211,7 @@ Performance/StringReplacement:
 # SupportedStyles: always, conditionals
 Style/AndOr:
   Exclude:
-    - 'lib/inline_svg/cached_asset_file.rb'
+    - "lib/inline_svg/cached_asset_file.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -222,7 +222,7 @@ Style/AndOr:
 # IgnoredMethods: lambda, proc, it
 Style/BlockDelimiters:
   Exclude:
-    - 'lib/inline_svg/transform_pipeline/transformations.rb'
+    - "lib/inline_svg/transform_pipeline/transformations.rb"
 
 # Offense count: 11
 # Cop supports --auto-correct.
@@ -230,37 +230,37 @@ Style/BlockDelimiters:
 # SupportedStyles: braces, no_braces, context_dependent
 Style/BracesAroundHashParameters:
   Exclude:
-    - 'lib/inline_svg/transform_pipeline/transformations.rb'
-    - 'spec/helpers/inline_svg_spec.rb'
-    - 'spec/inline_svg_spec.rb'
-    - 'spec/transformation_pipeline/transformations/data_attributes_spec.rb'
-    - 'spec/transformation_pipeline/transformations_spec.rb'
+    - "lib/inline_svg/transform_pipeline/transformations.rb"
+    - "spec/helpers/inline_svg_spec.rb"
+    - "spec/inline_svg_spec.rb"
+    - "spec/transformation_pipeline/transformations/data_attributes_spec.rb"
+    - "spec/transformation_pipeline/transformations_spec.rb"
 
 # Offense count: 6
 Style/CaseEquality:
   Exclude:
-    - 'lib/inline_svg/action_view/helpers.rb'
-    - 'spec/io_resource_spec.rb'
+    - "lib/inline_svg/action_view/helpers.rb"
+    - "spec/io_resource_spec.rb"
 
 # Offense count: 14
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: nested, compact
 Style/ClassAndModuleChildren:
   Exclude:
-    - 'lib/inline_svg/transform_pipeline/transformations.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/aria_attributes.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/class_attribute.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/data_attributes.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/description.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/height.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/id_attribute.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/no_comment.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/preserve_aspect_ratio.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/size.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/style_attribute.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/title.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/transformation.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/width.rb'
+    - "lib/inline_svg/transform_pipeline/transformations.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/aria_attributes.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/class_attribute.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/data_attributes.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/description.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/height.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/id_attribute.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/no_comment.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/preserve_aspect_ratio.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/size.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/style_attribute.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/title.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/transformation.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/width.rb"
 
 # Offense count: 26
 Style/Documentation:
@@ -270,7 +270,7 @@ Style/Documentation:
 # Cop supports --auto-correct.
 Style/EachWithObject:
   Exclude:
-    - 'lib/inline_svg/transform_pipeline/transformations.rb'
+    - "lib/inline_svg/transform_pipeline/transformations.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -278,14 +278,14 @@ Style/EachWithObject:
 # SupportedStyles: when_needed, always, never
 Style/Encoding:
   Exclude:
-    - 'inline_svg.gemspec'
+    - "inline_svg.gemspec"
 
 # Offense count: 4
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
   Exclude:
-    - 'lib/inline_svg.rb'
-    - 'lib/inline_svg/action_view/helpers.rb'
+    - "lib/inline_svg.rb"
+    - "lib/inline_svg/action_view/helpers.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -293,29 +293,29 @@ Style/GuardClause:
 # SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
 Style/HashSyntax:
   Exclude:
-    - 'Rakefile'
+    - "Rakefile"
 
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: MaxLineLength.
 Style/IfUnlessModifier:
   Exclude:
-    - 'lib/inline_svg/static_asset_finder.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/aria_attributes.rb'
+    - "lib/inline_svg/static_asset_finder.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/aria_attributes.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: InverseMethods, InverseBlocks.
 Style/InverseMethods:
   Exclude:
-    - 'lib/inline_svg/transform_pipeline/transformations.rb'
+    - "lib/inline_svg/transform_pipeline/transformations.rb"
 
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/MutableConstant:
   Exclude:
-    - 'lib/inline_svg/asset_file.rb'
-    - 'lib/inline_svg/version.rb'
+    - "lib/inline_svg/asset_file.rb"
+    - "lib/inline_svg/version.rb"
 
 # Offense count: 3
 # Cop supports --auto-correct.
@@ -323,21 +323,21 @@ Style/MutableConstant:
 # Whitelist: be, be_a, be_an, be_between, be_falsey, be_kind_of, be_instance_of, be_truthy, be_within, eq, eql, end_with, include, match, raise_error, respond_to, start_with
 Style/NestedParenthesizedCalls:
   Exclude:
-    - 'spec/io_resource_spec.rb'
+    - "spec/io_resource_spec.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: IncludeSemanticChanges.
 Style/NonNilCheck:
   Exclude:
-    - 'lib/inline_svg/transform_pipeline/transformations.rb'
+    - "lib/inline_svg/transform_pipeline/transformations.rb"
 
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: PreferredDelimiters.
 Style/PercentLiteralDelimiters:
   Exclude:
-    - 'inline_svg.gemspec'
+    - "inline_svg.gemspec"
 
 # Offense count: 6
 # Cop supports --auto-correct.
@@ -350,19 +350,19 @@ Style/RaiseArgs:
 # Cop supports --auto-correct.
 Style/RedundantBegin:
   Exclude:
-    - 'lib/inline_svg.rb'
+    - "lib/inline_svg.rb"
 
 # Offense count: 8
 # Cop supports --auto-correct.
 Style/RedundantSelf:
   Exclude:
-    - 'lib/inline_svg/transform_pipeline/transformations/data_attributes.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/height.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/id_attribute.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/preserve_aspect_ratio.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/size.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/transformation.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/width.rb'
+    - "lib/inline_svg/transform_pipeline/transformations/data_attributes.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/height.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/id_attribute.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/preserve_aspect_ratio.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/size.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/transformation.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/width.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -370,7 +370,7 @@ Style/RedundantSelf:
 # SupportedStyles: slashes, percent_r, mixed
 Style/RegexpLiteral:
   Exclude:
-    - 'spec/transformation_pipeline/transformations/transformation_spec.rb'
+    - "spec/transformation_pipeline/transformations/transformation_spec.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -378,7 +378,7 @@ Style/RegexpLiteral:
 # SupportedStyles: use_perl_names, use_english_names
 Style/SpecialGlobalVars:
   Exclude:
-    - 'inline_svg.gemspec'
+    - "inline_svg.gemspec"
 
 # Offense count: 280
 # Cop supports --auto-correct.
@@ -393,9 +393,9 @@ Style/StringLiterals:
 # IgnoredMethods: respond_to, define_method
 Style/SymbolProc:
   Exclude:
-    - 'lib/inline_svg/transform_pipeline/transformations/description.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/no_comment.rb'
-    - 'lib/inline_svg/transform_pipeline/transformations/title.rb'
+    - "lib/inline_svg/transform_pipeline/transformations/description.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/no_comment.rb"
+    - "lib/inline_svg/transform_pipeline/transformations/title.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -403,7 +403,7 @@ Style/SymbolProc:
 # SupportedStylesForMultiline: comma, consistent_comma, no_comma
 Style/TrailingCommaInArguments:
   Exclude:
-    - 'spec/transformation_pipeline/transformations_spec.rb'
+    - "spec/transformation_pipeline/transformations_spec.rb"
 
 # Offense count: 3
 # Cop supports --auto-correct.
@@ -411,11 +411,11 @@ Style/TrailingCommaInArguments:
 # SupportedStylesForMultiline: comma, consistent_comma, no_comma
 Style/TrailingCommaInLiteral:
   Exclude:
-    - 'lib/inline_svg/transform_pipeline/transformations.rb'
-    - 'spec/transformation_pipeline/transformations_spec.rb'
+    - "lib/inline_svg/transform_pipeline/transformations.rb"
+    - "spec/transformation_pipeline/transformations_spec.rb"
 
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/UnneededPercentQ:
   Exclude:
-    - 'inline_svg.gemspec'
+    - "inline_svg.gemspec"

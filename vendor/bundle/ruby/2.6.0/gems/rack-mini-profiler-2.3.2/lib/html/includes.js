@@ -1,6 +1,6 @@
 "use strict";
 
-var _MiniProfiler = (function() {
+var _MiniProfiler = (function () {
   var _arguments = arguments;
   var options,
     container,
@@ -109,7 +109,7 @@ var _MiniProfiler = (function() {
           // ie is buggy strip out functions
           var copy = {
             navigation: {},
-            timing: clientPerformance.timing.toJSON()
+            timing: clientPerformance.timing.toJSON(),
           };
 
           if (clientPerformance.navigation) {
@@ -126,8 +126,8 @@ var _MiniProfiler = (function() {
       ) {
         clientPerformance = {
           timing: {
-            navigationStart: ajaxStartTime.getTime()
-          }
+            navigationStart: ajaxStartTime.getTime(),
+          },
         };
         ajaxStartTime = null;
       }
@@ -135,19 +135,19 @@ var _MiniProfiler = (function() {
       if (fetchedIds.indexOf(id) < 0 && fetchingIds.indexOf(id) < 0) {
         idx = fetchingIds.push(id) - 1;
 
-        (function() {
+        (function () {
           var request = new XMLHttpRequest();
           var url = options.path + "results";
           var params = {
             id: id,
             clientPerformance: clientPerformance,
             clientProbes: clientProbes,
-            popup: 1
+            popup: 1,
           };
           var queryParam = toQueryString(params);
           request.open("POST", url, true);
 
-          request.onload = function() {
+          request.onload = function () {
             if (request.status >= 200 && request.status < 400) {
               var json = JSON.parse(request.responseText);
               fetchedIds.push(id);
@@ -186,7 +186,7 @@ var _MiniProfiler = (function() {
         result[result.length] = toQueryString(val, newKey);
       } else {
         if (Array.isArray(val)) {
-          val.forEach(function(v) {
+          val.forEach(function (v) {
             result[result.length] =
               encodeURIComponent(newKey + "[]") + "=" + encodeURIComponent(v);
           });
@@ -201,7 +201,7 @@ var _MiniProfiler = (function() {
       }
     }
     return result
-      .filter(function(element) {
+      .filter(function (element) {
         return element && element.length > 0;
       })
       .join("&");
@@ -223,7 +223,7 @@ var _MiniProfiler = (function() {
     if (!controls && reqs > 1 && options.collapseResults && !expandedResults) {
       if (!totalsControl) {
         toArray(container.querySelectorAll(".profiler-result")).forEach(
-          function(el) {
+          function (el) {
             return (el.style.display = "none");
           }
         );
@@ -232,17 +232,17 @@ var _MiniProfiler = (function() {
         totalsControl.innerHTML =
           "<div class='profiler-button profiler-totals'></div>";
         container.appendChild(totalsControl);
-        totalsControl.addEventListener("click", function() {
+        totalsControl.addEventListener("click", function () {
           toArray(
             totalsControl.parentNode.querySelectorAll(".profiler-result")
-          ).forEach(function(el) {
+          ).forEach(function (el) {
             return (el.style.display = "block");
           });
           totalsControl.style.display = "none";
           expandedResults = true;
         });
         toArray(totalsControl.querySelectorAll(".profiler-button")).forEach(
-          function(el) {
+          function (el) {
             return (el.style.display = "block");
           }
         );
@@ -270,16 +270,16 @@ var _MiniProfiler = (function() {
     var button = result.querySelector(".profiler-button"),
       popup = result.querySelector(".profiler-popup"); // button will appear in corner with the total profiling duration - click to show details
 
-    button.addEventListener("click", function() {
+    button.addEventListener("click", function () {
       buttonClick(button, popup);
     }); // small duration steps and the column with aggregate durations are hidden by default; allow toggling
 
     toggleHidden(popup); // lightbox in the queries
 
-    toArray(popup.querySelectorAll(".profiler-queries-show")).forEach(function(
+    toArray(popup.querySelectorAll(".profiler-queries-show")).forEach(function (
       el
     ) {
-      el.addEventListener("click", function() {
+      el.addEventListener("click", function () {
         queriesShow(this, result);
       });
     }); // limit count
@@ -316,11 +316,11 @@ var _MiniProfiler = (function() {
       var elements = toArray(popup.parentNode.querySelectorAll("." + klass));
 
       if (isHidden) {
-        elements.forEach(function(el) {
+        elements.forEach(function (el) {
           return (el.style.display = "table-row");
         });
       } else {
-        elements.forEach(function(el) {
+        elements.forEach(function (el) {
           return (el.style.display = "none");
         });
       }
@@ -333,9 +333,9 @@ var _MiniProfiler = (function() {
       popupPreventHorizontalScroll(popup);
     };
 
-    [childrenTime, trivial, trivialGaps].forEach(function(el) {
+    [childrenTime, trivial, trivialGaps].forEach(function (el) {
       if (el) {
-        el.addEventListener("click", function() {
+        el.addEventListener("click", function () {
           toggleIt(this);
         });
       }
@@ -375,12 +375,12 @@ var _MiniProfiler = (function() {
     } else {
       var visiblePopups = toArray(
         container.querySelectorAll(".profiler-popup")
-      ).filter(function(el) {
+      ).filter(function (el) {
         return el.offsetWidth > 0 || el.offsetHeight > 0;
       }); // theirButtons = visiblePopups.siblings(".profiler-button");
 
       var theirButtons = [];
-      visiblePopups.forEach(function(el) {
+      visiblePopups.forEach(function (el) {
         theirButtons.push(el.parentNode.querySelector(".profiler-button"));
       }); // hide any other popups
 
@@ -415,7 +415,7 @@ var _MiniProfiler = (function() {
     popup
   ) {
     var childrenHeight = 0;
-    toArray(popup.children).forEach(function(el) {
+    toArray(popup.children).forEach(function (el) {
       childrenHeight += el.offsetHeight;
     });
     popup.style.paddingRight = "".concat(
@@ -427,7 +427,7 @@ var _MiniProfiler = (function() {
   var popupHide = function popupHide(button, popup) {
     if (button) {
       if (Array.isArray(button)) {
-        button.forEach(function(el) {
+        button.forEach(function (el) {
           return el.classList.remove("profiler-button-active");
         });
       } else {
@@ -437,7 +437,7 @@ var _MiniProfiler = (function() {
 
     if (popup) {
       if (Array.isArray(popup)) {
-        popup.forEach(function(el) {
+        popup.forEach(function (el) {
           return (el.style.display = "none");
         });
       } else {
@@ -485,11 +485,11 @@ var _MiniProfiler = (function() {
     whatToScroll.scrollTop =
       (whatToScroll.scrollTop || 0) + cells[0].offsetTop - 100; // highlight and then fade back to original bg color; do it ourselves to prevent any conflicts w/ jquery.UI or other implementations of Resig's color plugin
 
-    cells.forEach(function(el) {
+    cells.forEach(function (el) {
       el.classList.add("higlight-animate");
     });
-    setTimeout(function() {
-      cells.forEach(function(el) {
+    setTimeout(function () {
+      cells.forEach(function (el) {
         return el.classList.remove("higlight-animate");
       });
     }, 3000);
@@ -499,7 +499,7 @@ var _MiniProfiler = (function() {
     // this happens on every keystroke, and :visible is crazy expensive in IE <9
     // and in this case, the display:none check is sufficient.
     var popup = toArray(document.querySelectorAll(".profiler-popup")).filter(
-      function(el) {
+      function (el) {
         return el.style.display === "block";
       }
     );
@@ -560,7 +560,7 @@ var _MiniProfiler = (function() {
     // simplified version of https://github.com/jeresig/jquery.hotkeys/blob/master/jquery.hotkeys.js
     var shortcut = options.toggleShortcut.toLowerCase();
     var modifier = "";
-    ["alt", "ctrl", "shift"].forEach(function(k) {
+    ["alt", "ctrl", "shift"].forEach(function (k) {
       if (e[k + "Key"]) {
         modifier += "".concat(k, "+");
       }
@@ -593,20 +593,20 @@ var _MiniProfiler = (function() {
       110: ".",
       173: "-",
       186: ";",
-      187: "="
+      187: "=",
     };
     var shiftNums = {
       "`": "~",
-      "1": "!",
-      "2": "@",
-      "3": "#",
-      "4": "$",
-      "5": "%",
-      "6": "^",
-      "7": "&",
-      "8": "*",
-      "9": "(",
-      "0": ")",
+      1: "!",
+      2: "@",
+      3: "#",
+      4: "$",
+      5: "%",
+      6: "^",
+      7: "&",
+      8: "*",
+      9: "(",
+      0: ")",
       "-": "_",
       "=": "+",
       ";": ": ",
@@ -614,7 +614,7 @@ var _MiniProfiler = (function() {
       ",": "<",
       ".": ">",
       "/": "?",
-      "\\": "|"
+      "\\": "|",
     };
     var character = String.fromCharCode(e.which).toLowerCase();
     var special = specialKeys[e.which];
@@ -673,10 +673,10 @@ var _MiniProfiler = (function() {
     toggleHidden(popup);
     prettyPrint(); // since queries are already shown, just highlight and scroll when clicking a "1 sql" link
 
-    toArray(popup.querySelectorAll(".profiler-queries-show")).forEach(function(
+    toArray(popup.querySelectorAll(".profiler-queries-show")).forEach(function (
       el
     ) {
-      el.addEventListener("click", function() {
+      el.addEventListener("click", function () {
         queriesScrollIntoView(
           this,
           document.querySelector(".profiler-queries"),
@@ -693,8 +693,8 @@ var _MiniProfiler = (function() {
       temp.innerHTML = MiniProfiler.templates.snapshotsGroupsList(data);
     } else if (data.group_name) {
       var allCustomFieldsNames = [];
-      data.list.forEach(function(snapshot) {
-        Object.keys(snapshot.custom_fields).forEach(function(k) {
+      data.list.forEach(function (snapshot) {
+        Object.keys(snapshot.custom_fields).forEach(function (k) {
           if (
             allCustomFieldsNames.indexOf(k) === -1 &&
             options.hiddenCustomFields.indexOf(k.toLowerCase()) === -1
@@ -706,10 +706,10 @@ var _MiniProfiler = (function() {
       allCustomFieldsNames.sort();
       temp.innerHTML = MiniProfiler.templates.snapshotsList({
         data: data,
-        allCustomFieldsNames: allCustomFieldsNames
+        allCustomFieldsNames: allCustomFieldsNames,
       });
     }
-    Array.from(temp.children).forEach(function(child) {
+    Array.from(temp.children).forEach(function (child) {
       document.body.appendChild(child);
     });
   };
@@ -725,24 +725,24 @@ var _MiniProfiler = (function() {
       container.appendChild(_controls);
       document
         .querySelector(".profiler-controls .profiler-min-max")
-        .addEventListener("click", function() {
+        .addEventListener("click", function () {
           return toggleClass(container, "profiler-min");
         });
-      container.addEventListener("mouseenter", function() {
+      container.addEventListener("mouseenter", function () {
         if (this.classList.contains("profiler-min")) {
           this.querySelector(".profiler-min-max").style.display = "block";
         }
       });
-      container.addEventListener("mouseleave", function() {
+      container.addEventListener("mouseleave", function () {
         if (this.classList.contains("profiler-min")) {
           this.querySelector(".profiler-min-max").style.display = "none";
         }
       });
       document
         .querySelector(".profiler-controls .profiler-clear")
-        .addEventListener("click", function() {
+        .addEventListener("click", function () {
           toArray(container.querySelectorAll(".profiler-result")).forEach(
-            function(el) {
+            function (el) {
               return el.parentElement.removeChild(el);
             }
           );
@@ -785,9 +785,9 @@ var _MiniProfiler = (function() {
     if (!window.MiniProfiler || !window.MiniProfiler.patchesApplied) {
       var send = XMLHttpRequest.prototype.send;
 
-      XMLHttpRequest.prototype.send = function(data) {
+      XMLHttpRequest.prototype.send = function (data) {
         ajaxStartTime = new Date();
-        this.addEventListener("load", function() {
+        this.addEventListener("load", function () {
           // responseURL isn't available in IE11
           if (
             this.responseURL &&
@@ -826,7 +826,7 @@ var _MiniProfiler = (function() {
       ) {
         // Get the instance of PageRequestManager.
         var PageRequestManager = Sys.WebForms.PageRequestManager.getInstance();
-        PageRequestManager.add_endRequest(function(sender, args) {
+        PageRequestManager.add_endRequest(function (sender, args) {
           if (args) {
             var response = args.get_response();
 
@@ -848,14 +848,13 @@ var _MiniProfiler = (function() {
       } // more Asp.Net callbacks
 
       if (typeof WebForm_ExecuteCallback == "function") {
-        WebForm_ExecuteCallback = (function(callbackObject) {
+        WebForm_ExecuteCallback = (function (callbackObject) {
           // Store original function
           var original = WebForm_ExecuteCallback;
-          return function(callbackObject) {
+          return function (callbackObject) {
             original(callbackObject);
-            var stringIds = callbackObject.xmlRequest.getResponseHeader(
-              "X-MiniProfiler-Ids"
-            );
+            var stringIds =
+              callbackObject.xmlRequest.getResponseHeader("X-MiniProfiler-Ids");
 
             if (stringIds) {
               var ids = stringIds.split(",");
@@ -871,7 +870,7 @@ var _MiniProfiler = (function() {
         typeof Ext.Ajax.on != "undefined"
       ) {
         // Ext.Ajax is a singleton, so we just have to attach to its 'requestcomplete' event
-        Ext.Ajax.on("requestcomplete", function(e, xhr, settings) {
+        Ext.Ajax.on("requestcomplete", function (e, xhr, settings) {
           //iframed file uploads don't have headers
           if (!xhr || !xhr.getResponseHeader) {
             return;
@@ -895,7 +894,7 @@ var _MiniProfiler = (function() {
               var ids = stringIds.split(",");
               fetchResults(ids);
             }
-          }
+          },
         });
       } // add support for AngularJS, which use the basic XMLHttpRequest object.
 
@@ -909,25 +908,27 @@ var _MiniProfiler = (function() {
               typeof this.miniprofiler.prev_onreadystatechange == "undefined"
             ) {
               this.miniprofiler = {
-                prev_onreadystatechange: this.onreadystatechange
+                prev_onreadystatechange: this.onreadystatechange,
               };
 
-              this.onreadystatechange = function onReadyStateChangeReplacement() {
-                if (this.readyState == 4) {
-                  var stringIds = this.getResponseHeader("X-MiniProfiler-Ids");
+              this.onreadystatechange =
+                function onReadyStateChangeReplacement() {
+                  if (this.readyState == 4) {
+                    var stringIds =
+                      this.getResponseHeader("X-MiniProfiler-Ids");
 
-                  if (stringIds) {
-                    var ids = stringIds.split(",");
-                    fetchResults(ids);
+                    if (stringIds) {
+                      var ids = stringIds.split(",");
+                      fetchResults(ids);
+                    }
                   }
-                }
 
-                if (this.miniprofiler.prev_onreadystatechange !== null)
-                  return this.miniprofiler.prev_onreadystatechange.apply(
-                    this,
-                    arguments
-                  );
-              };
+                  if (this.miniprofiler.prev_onreadystatechange !== null)
+                    return this.miniprofiler.prev_onreadystatechange.apply(
+                      this,
+                      arguments
+                    );
+                };
             }
           }
 
@@ -938,10 +939,10 @@ var _MiniProfiler = (function() {
       if (typeof window.fetch === "function") {
         var __originalFetch = window.fetch;
 
-        window.fetch = function(input, init) {
+        window.fetch = function (input, init) {
           var originalFetchRun = __originalFetch(input, init);
 
-          originalFetchRun.then(function(response) {
+          originalFetchRun.then(function (response) {
             try {
               // look for x-mini-profile-ids
               var entries = response.headers.entries();
@@ -1000,7 +1001,7 @@ var _MiniProfiler = (function() {
       var script = document.getElementById("mini-profiler");
       if (!script || !script.getAttribute) return;
 
-      this.options = options = (function() {
+      this.options = options = (function () {
         var version = script.getAttribute("data-version");
         var path = script.getAttribute("data-path");
         var currentId = script.getAttribute("data-current-id");
@@ -1051,7 +1052,7 @@ var _MiniProfiler = (function() {
           collapseResults: collapseResults,
           htmlContainer: htmlContainer,
           cssUrl: cssUrl,
-          hiddenCustomFields: hiddenCustomFields
+          hiddenCustomFields: hiddenCustomFields,
         };
       })();
 
@@ -1083,7 +1084,7 @@ var _MiniProfiler = (function() {
         sc.src = s;
         var done = false;
 
-        sc.onload = sc.onreadystatechange = function(_, abort) {
+        sc.onload = sc.onreadystatechange = function (_, abort) {
           if (!sc.readyState || /loaded|complete/.test(sc.readyState)) {
             if (!abort && !done) {
               done = true;
@@ -1158,7 +1159,7 @@ var _MiniProfiler = (function() {
       expandedResults = false;
       toArray(
         document.querySelectorAll(".profiler-results .profiler-result")
-      ).forEach(function(el) {
+      ).forEach(function (el) {
         return el.parentElement.removeChild(el);
       });
     },
@@ -1172,7 +1173,7 @@ var _MiniProfiler = (function() {
       return {
         Name: name,
         Duration: "",
-        Start: ""
+        Start: "",
       };
     },
     renderDate: function renderDate(jsonDate) {
@@ -1236,7 +1237,7 @@ var _MiniProfiler = (function() {
           isTrivial: trivial,
           name: t.Name,
           duration: t.Duration,
-          start: t.Start
+          start: t.Start,
         });
       } // Use the Paint Timing API for render performance.
 
@@ -1248,12 +1249,12 @@ var _MiniProfiler = (function() {
             isTrivial: false,
             name: "First Paint Time",
             duration: firstPaint[0].duration,
-            start: firstPaint[0].startTime
+            start: firstPaint[0].startTime,
           });
         }
       }
 
-      list.sort(function(a, b) {
+      list.sort(function (a, b) {
         return a.start - b.start;
       });
       return list;
@@ -1306,7 +1307,7 @@ var _MiniProfiler = (function() {
 
             newList.push({
               start: item.start,
-              finish: duration.start
+              finish: duration.start,
             });
           }
 
@@ -1318,7 +1319,7 @@ var _MiniProfiler = (function() {
 
             newList.push({
               start: duration.finish,
-              finish: item.finish
+              finish: item.finish,
             });
           }
         }
@@ -1329,7 +1330,7 @@ var _MiniProfiler = (function() {
       var processTimes = function processTimes(elem, parent) {
         var duration = {
           start: elem.start_milliseconds,
-          finish: elem.start_milliseconds + elem.duration_milliseconds
+          finish: elem.start_milliseconds + elem.duration_milliseconds,
         };
         elem.richTiming = [duration];
 
@@ -1350,7 +1351,7 @@ var _MiniProfiler = (function() {
 
       processTimes(root, null); // sort results by time
 
-      result.sort(function(a, b) {
+      result.sort(function (a, b) {
         return a.start_milliseconds - b.start_milliseconds;
       });
 
@@ -1382,7 +1383,7 @@ var _MiniProfiler = (function() {
         if (match === null || overlap > match.duration) {
           match = {
             name: node.name,
-            duration: overlap
+            duration: overlap,
           };
         } else if (match.name == node.name) {
           match.duration += overlap;
@@ -1399,11 +1400,11 @@ var _MiniProfiler = (function() {
 
       var time = 0;
       var prev = null;
-      result.forEach(function(r) {
+      result.forEach(function (r) {
         r.prevGap = {
           duration: (r.start_milliseconds - time).toFixed(2),
           start: time,
-          finish: r.start_milliseconds
+          finish: r.start_milliseconds,
         };
         r.prevGap.topReason = determineGap(r.prevGap, root, null);
         time = r.start_milliseconds + r.duration_milliseconds;
@@ -1415,7 +1416,7 @@ var _MiniProfiler = (function() {
         me.nextGap = {
           duration: (root.duration_milliseconds - time).toFixed(2),
           start: time,
-          finish: root.duration_milliseconds
+          finish: root.duration_milliseconds,
         };
         me.nextGap.topReason = determineGap(me.nextGap, root, null);
       }
@@ -1445,7 +1446,7 @@ var _MiniProfiler = (function() {
     formatParameters: function formatParameters(parameters) {
       if (parameters != null) {
         return parameters
-          .map(function(item, index) {
+          .map(function (item, index) {
             return "[" + item[0] + ", " + item[1] + "]";
           })
           .join(", ");
@@ -1483,7 +1484,7 @@ var _MiniProfiler = (function() {
       }
       diff = Math.round(diff / 24);
       return buildDisplayTime(diff, "day");
-    }
+    },
   };
 })();
 
