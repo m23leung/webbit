@@ -1,10 +1,8 @@
 <p>Hey <%= @submission.user.username %>,</p>
 
-<p>Your submission <%= @submission.title %> received a response.</p>
+<p>Your submission <i><%= @submission.title %></i> received a response.</p>
 
-<p>New comment:</p>
-<p><%= @comment.reply %></p>
+<p>New comment from <%= @comment.user.username %>:</p>
+<p>"<%= @comment.reply %>"</p>
 
-<p>
-  <%= link_to "Unsubscribe", comment_unsubscribe_url(@submission.user.unsubscribe_hash) %>
-</p>
+<p><%= link_to "Unsubscribe", comment_unsubscribe_url(@submission.user.unsubscribe_hash) %></p>
