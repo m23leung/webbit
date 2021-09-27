@@ -1,13 +1,23 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  mount Sidekiq::Web => '/sidekiq'
+
+  authenticate :user, lambda { |u| u.admin? } do
+    namespace :admin do
+      mount Sidekiq::Web => '/sidekiq'
+      resources :users, only: [:index]
+      resources :submissions, only: [:index]
+      root to: "users#index"
+    end
+  end
   
   resources :communities do
     resource :subscriptions
   end
   
   get "submissions/unsubscribe/:unsubscribe_hash" => "submissions#unsubscribe", :as => "comment_unsubscribe"
+
+  get :search, controller: "application"
 
   resources :submissions do
     member do
@@ -24,6 +34,7 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :users, only: [:show], as: "profile", path: "profile"
+  resources :premium
 
   root to: "submissions#index"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

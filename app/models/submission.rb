@@ -1,4 +1,5 @@
 class Submission < ApplicationRecord
+  extend FriendlyId
   include VotesCountable
 
   mount_uploader :submission_image, SubmissionImageUploader
@@ -9,6 +10,8 @@ class Submission < ApplicationRecord
 
   has_many :comments, dependent: :destroy
 
+  has_rich_text :body
+
   validates :title, presence: true
   validates :body, length: { maximum: 8000 }
 
@@ -17,6 +20,8 @@ class Submission < ApplicationRecord
   validates :url, url: true, allow_blank: true
 
   acts_as_votable
+
+  friendly_id :title, use: :slugged
 
   private
 

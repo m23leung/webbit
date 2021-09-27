@@ -36,6 +36,10 @@ gem 'mini_magick', '~> 4.11'
 gem 'valid_url', '~> 0.0.4'
 gem 'inline_svg', '~> 1.7', '>= 1.7.2'
 gem 'sidekiq', '~> 6.2', '>= 6.2.2'
+gem 'ransack', '~> 2.1', '>= 2.1.1'
+gem 'stripe', '~> 5.38'
+gem 'friendly_id', '~> 5.1'
+gem 'meta-tags', '~> 2.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

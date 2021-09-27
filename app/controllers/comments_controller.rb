@@ -9,8 +9,7 @@ class CommentsController < ApplicationController
 
   def create
     @comment = @submission.comments.create(params[:comment].permit(:reply, :submission_id))
-    @comment.user_id = current_user.id
-    binding.pry
+    @comment.user_id = current_user.id 
     respond_to do |format|
       if @comment.save
         if @submission.user.comment_subscription?
